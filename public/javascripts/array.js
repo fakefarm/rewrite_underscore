@@ -18,12 +18,18 @@ var _ = (function(){
   };
 
   _.rest = _.tail = _.drop = function(array, n) {
-    var num = ( n == null || n );
     // _dw seems that slice's api works that the second argument can either be a boolean or a number.
     // if it's a boolean (true) then it will slice the first element
     // if it's false, then it does not slice first element
     // if it's a number, then it will slice the number of elements off the front and go until the end.
+    var num = ( n == null || n );
     return slice.call(array, num);
+  };
+
+  _.last = function(array, n, guard) {
+      if (array == null || array.length < 1) return void 0; // _dw returns undefined rather than blowing up. Nice!
+      if (n == null || guard) return array[array.length - 1];
+      return _.rest(array, Math.max(0, array.length - n));
   };
 
   return _;

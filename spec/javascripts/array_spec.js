@@ -1,4 +1,10 @@
 describe('Arrays', function() {
+  var A3;
+
+  beforeEach(function(){
+    A3 = [1, 2, 3];
+  });
+
   describe('_.first()', function() {
     it('can pull out the first element of an array', function(){
       expect(_.first([1,2,3])).toBe(1);
@@ -18,11 +24,11 @@ describe('Arrays', function() {
     });
 
     it('can fetch the first n elements', function() {
-      expect(_.first([1, 2, 3], 2)).toEqual([1, 2])
+      expect(_.first(A3, 2)).toEqual([1, 2])
     });
 
     it('returns the whole array if n > length', function() {
-      expect(_.first([1, 2, 3], 5)).toEqual([1, 2, 3])
+      expect(_.first(A3, 5)).toEqual(A3)
     });
 
     it('works on an arguments object', function() {
@@ -31,7 +37,7 @@ describe('Arrays', function() {
     });
 
     xit('works well with _.map', function(){
-      var result = _.map([[1, 2, 3], [1, 2, 3]], _.first);
+      var result = _.map([A3, A3], _.first);
       expect(result).toEqual([1,1]);
     });
 
@@ -69,11 +75,11 @@ describe('Arrays', function() {
 
     xit('works an an arguments object', function() {
       var result = (function() { return _(arguments).initial();}(1,2,3,4));
-      expect(result).toEqual([1, 2, 3])
+      expect(result).toEqual(A3)
     });
 
     xit('works well with _.map', function() {
-      result = _.map([[1, 2, ,3], [1, 2, 3]], _.initial);
+      result = _.map([[1, 2, ,3], A3], _.initial);
       expect(_.flatten(result)).toEqual([1, 2, 1, 2]);
     })
   });
@@ -99,7 +105,7 @@ describe('Arrays', function() {
       expect(result).toEqual([2, 3, 4]);
     });
 
-    // result = _.map([[1, 2, 3], [1, 2, 3]], _.rest);
+    // result = _.map([A3, A3], _.rest);
 
     xit('works well with _.map', function() {
       expect(_.flatten(result)).toEqual([2, 3, 2, 3]);
@@ -116,4 +122,52 @@ describe('Arrays', function() {
     });
   });
 
+  describe('_.last()', function() {
+
+    it('can pull out the last element of an array', function(){
+      expect(_.last(A3)).toEqual(3);
+    });
+
+    xit('can perform OO-style "last()"', function() {
+      expect(_(A3).last()).toEqual(3);
+    });
+
+    it('returns an empty array when <= 0 (0 case)', function(){
+      expect(_.last(A3, 0)).toEqual([]);
+    });
+
+    it('returns an empty array when n <= 0 (negative case)', function() {
+      expect(_.last(A3, -1)).toEqual([]);
+    });
+
+    it('can fetch the last n elements', function() {
+      expect(_.last(A3, 2)).toEqual([2,3]);
+    });
+
+    it('returns the whole array if n > length', function() {
+      expect(_.last(A3, 5)).toEqual(A3);
+    });
+
+    xit('works on an arguments object', function() {
+        var result = (function(){ return _(arguments).last(); }(1, 2, 3, 4));
+        expect(result).toEqual(4);
+    });
+
+    xit('works well with _.map', function(){
+        var result = _.map([[1, 2, 3], [1, 2, 3]], _.last);
+        expect(result).toEqual([3, 3]);
+    });
+
+    it('returns undefined when called on null', function(){
+        expect(_.last(null)).toEqual(void 0);
+    });
+
+    it('returns undefined when called on empty array', function(){
+      var arr = [];
+      arr[-1] = 'null'
+      expect(_.last(arr)).toBe(void 0);
+    })
+
+
+  });
 });
