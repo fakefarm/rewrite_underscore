@@ -27,10 +27,12 @@ var _ = (function(){
   };
 
   _.last = function(array, n, guard) {
-      if (array == null || array.length < 1) return void 0; // _dw returns undefined rather than blowing up. Nice!
-      if (n == null || guard) return array[array.length - 1];
-      return _.rest(array, Math.max(0, array.length - n));
+    if (array == null || array.length < 1) return void 0; // _dw returns undefined rather than blowing up. Nice!
+    if (n == null || guard) return array[array.length - 1];
+    return _.rest(array, Math.max(0, array.length - n));
   };
+
+  _.compact = function(array) {};
 
   return _;
 }());

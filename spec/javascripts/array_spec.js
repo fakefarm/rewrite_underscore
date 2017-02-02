@@ -167,7 +167,22 @@ describe('Arrays', function() {
       arr[-1] = 'null'
       expect(_.last(arr)).toBe(void 0);
     })
+  });
 
+  describe('_.compact()', function() {
 
+    xit('removes all falsy values', function(){
+        expect(_.compact([1, false, null, 0, '', void 0, NaN, 2])).toEqual([1,2]);
+    });
+
+    xit('works on an arguments object', function() {
+      var result = (function(){ return _.compact(arguments); }(0, 1, false, 2, false, 3));
+      expect(result).toEqual(A3);
+    });
+
+    xit('works well with _.map', function(){
+      var result = _.map([[1, false, false], [false, false, 3]], _.compact);
+      expect(result).toEqual( [[1], [3]]);
+    });
   });
 });
