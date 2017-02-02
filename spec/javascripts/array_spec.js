@@ -109,5 +109,16 @@ describe('Arrays', function() {
     xit('works well with _.map', function() {
       expect(_.flatten(result)).toEqual([2, 3, 2, 3]);
     });
+
+    describe('aliases include...', function() {
+      it('_.tail()', function() {
+          expect(_.tail).toEqual(_.rest);
+      });
+
+      it('_.drop()', function() {
+          expect(_.tail).toEqual(_.drop);
+      });
+    });
   });
+
 });

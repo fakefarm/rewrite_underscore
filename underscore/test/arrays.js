@@ -45,13 +45,13 @@
     // assert.deepEqual(_.flatten(result), [2, 3, 2, 3], 'works well with _.map');
   // });
 
-  QUnit.test('tail', function(assert) {
-    assert.strictEqual(_.tail, _.rest, 'is an alias for rest');
-  });
+  // QUnit.test('tail', function(assert) {
+  //   assert.strictEqual(_.tail, _.rest, 'is an alias for rest');
+  // });
 
-  QUnit.test('drop', function(assert) {
-    assert.strictEqual(_.drop, _.rest, 'is an alias for rest');
-  });
+  // QUnit.test('drop', function(assert) {
+  //   assert.strictEqual(_.drop, _.rest, 'is an alias for rest');
+  // });
 
   // QUnit.test('initial', function(assert) {
     // assert.deepEqual(_.initial([1, 2, 3, 4, 5]), [1, 2, 3, 4], 'returns all but the last element');

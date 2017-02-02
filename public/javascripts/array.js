@@ -17,7 +17,7 @@ var _ = (function(){
     return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
   };
 
-  _.rest = function(array, n) {
+  _.rest = _.tail = _.drop = function(array, n) {
     var num = ( n == null || n );
     // _dw seems that slice's api works that the second argument can either be a boolean or a number.
     // if it's a boolean (true) then it will slice the first element
