@@ -3,23 +3,22 @@
 
   QUnit.module('Arrays');
 
-  QUnit.test('first', function(assert) {
+  // QUnit.test('first', function(assert) {
     // assert.strictEqual(_.first([1, 2, 3]), 1, 'can pull out the first element of an array');
     // assert.strictEqual(_([1, 2, 3]).first(), 1, 'can perform OO-style "first()"');
-    assert.deepEqual(_.first([1, 2, 3], 0), [], 'returns an empty array when n <= 0 (0 case)');
-    assert.deepEqual(_.first([1, 2, 3], -1), [], 'returns an empty array when n <= 0 (negative case)');
-    assert.deepEqual(_.first([1, 2, 3], 2), [1, 2], 'can fetch the first n elements');
-    assert.deepEqual(_.first([1, 2, 3], 5), [1, 2, 3], 'returns the whole array if n > length');
-    var result = (function(){ return _.first(arguments); }(4, 3, 2, 1));
-    assert.strictEqual(result, 4, 'works on an arguments object');
-    result = _.map([[1, 2, 3], [1, 2, 3]], _.first);
-    assert.deepEqual(result, [1, 1], 'works well with _.map');
-    assert.strictEqual(_.first(null), void 0, 'returns undefined when called on null');
-
-    Array.prototype[0] = 'boo';
-    assert.strictEqual(_.first([]), void 0, 'return undefined when called on a empty array');
-    delete Array.prototype[0];
-  });
+    // assert.deepEqual(_.first([1, 2, 3], 0), [], 'returns an empty array when n <= 0 (0 case)');
+    // assert.deepEqual(_.first([1, 2, 3], -1), [], 'returns an empty array when n <= 0 (negative case)');
+    // assert.deepEqual(_.first([1, 2, 3], 2), [1, 2], 'can fetch the first n elements');
+    // assert.deepEqual(_.first([1, 2, 3], 5), [1, 2, 3], 'returns the whole array if n > length');
+    // var result = (function(){ return _.first(arguments); }(4, 3, 2, 1));
+    // assert.strictEqual(result, 4, 'works on an arguments object');
+    // result = _.map([[1, 2, 3], [1, 2, 3]], _.first);
+    // assert.deepEqual(result, [1, 1], 'works well with _.map');
+    // assert.strictEqual(_.first(null), void 0, 'returns undefined when called on null');
+    // Array.prototype[0] = 'boo';
+    // assert.strictEqual(_.first([]), void 0, 'return undefined when called on a empty array');
+    // delete Array.prototype[0];
+  // });
 
   QUnit.test('head', function(assert) {
     assert.strictEqual(_.head, _.first, 'is an alias for first');
@@ -48,7 +47,7 @@
     assert.strictEqual(_.drop, _.rest, 'is an alias for rest');
   });
 
-  QUnit.test('initial', function(assert) {
+  // QUnit.test('initial', function(assert) {
     // assert.deepEqual(_.initial([1, 2, 3, 4, 5]), [1, 2, 3, 4], 'returns all but the last element');
     // assert.deepEqual(_.initial([1, 2, 3, 4], 2), [1, 2], 'returns all but the last n elements');
     // assert.deepEqual(_.initial([1, 2, 3, 4], 6), [], 'returns an empty array when n > length');
@@ -56,7 +55,7 @@
     // assert.deepEqual(result, [1, 2, 3], 'works on an arguments object');
     // result = _.map([[1, 2, 3], [1, 2, 3]], _.initial);
     // assert.deepEqual(_.flatten(result), [1, 2, 1, 2], 'works well with _.map');
-  });
+  // });
 
   QUnit.test('last', function(assert) {
     assert.strictEqual(_.last([1, 2, 3]), 3, 'can pull out the last element of an array');

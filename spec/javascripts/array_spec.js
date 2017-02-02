@@ -12,6 +12,36 @@ describe("Arrays", function() {
     it('returns an empty array when n <= 0 (0 case)', function() {
         expect(_.first([1,2,3], 0)).toEqual([]);
     });
+
+    it('returns an empty array when n <= 0 (negative case)', function() {
+        expect(_.first([1,2,3], -1)).toEqual([])
+    });
+
+    it('can fetch the first n elements', function() {
+      expect(_.first([1, 2, 3], 2)).toEqual([1, 2])
+    });
+
+    it('returns the whole array if n > length', function() {
+      expect(_.first([1, 2, 3], 5)).toEqual([1, 2, 3])
+    });
+
+    it('works on an arguments object', function() {
+      var result = (function(){ return _.first(arguments); }(4, 3, 2, 1));
+      expect(result).toEqual(4);
+    });
+
+    xit('works well with _.map', function(){
+      var result = _.map([[1, 2, 3], [1, 2, 3]], _.first);
+      expect(result).toEqual([1,1]);
+    });
+
+    it('returns undefined when called on null', function() {
+      expect(_.first(null)).toEqual(void 0)
+    });
+
+    it('return undefined when called on an empty array', function() {
+      expect(_.first([])).toEqual(void 0);
+    })
   });
 
   describe("initial()", function() {
