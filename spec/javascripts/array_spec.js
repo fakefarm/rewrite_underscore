@@ -44,17 +44,12 @@ describe('Arrays', function() {
     });
 
 
-    describe('has the following aliases', function() {
-      describe('_.head()', function() {
-       it('is an alias for _.first()', function() {
+    describe('aliases', function() {
+       it('_.head()', function() {
          expect(_.head).toEqual(_.first);
-       });
       });
-
-      describe('_.take()', function() {
-        it('is an alias for _.first()', function() {
-            expect(_.take).toEqual(_.first);
-        });
+      it('_.take()', function() {
+          expect(_.take).toEqual(_.first);
       });
     });
   });
@@ -110,7 +105,7 @@ describe('Arrays', function() {
       expect(_.flatten(result)).toEqual([2, 3, 2, 3]);
     });
 
-    describe('aliases include...', function() {
+    describe('aliases', function() {
       it('_.tail()', function() {
           expect(_.tail).toEqual(_.rest);
       });
