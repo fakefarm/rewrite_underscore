@@ -1,0 +1,3 @@
+# Underschool
+
+Translating Underscore QUnit tests into Jasmine. Then, implement accordingly...
