@@ -67,4 +67,10 @@ describe("Arrays", function() {
       expect(_.flatten(result)).toEqual([1, 2, 1, 2]);
     })
   });
+
+  describe('head', function() {
+     it('is an alias for first()', function() {
+       expect(_.head).toEqual(_.first);
+     });
+  });
 });
