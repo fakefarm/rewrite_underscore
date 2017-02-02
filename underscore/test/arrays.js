@@ -20,9 +20,9 @@
     // delete Array.prototype[0];
   // });
 
-  QUnit.test('head', function(assert) {
-    assert.strictEqual(_.head, _.first, 'is an alias for first');
-  });
+  // QUnit.test('head', function(assert) {
+  //   assert.strictEqual(_.head, _.first, 'is an alias for first');
+  // });
 
   QUnit.test('take', function(assert) {
     assert.strictEqual(_.take, _.first, 'is an alias for first');

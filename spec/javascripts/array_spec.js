@@ -68,9 +68,15 @@ describe("Arrays", function() {
     })
   });
 
-  describe('head', function() {
-     it('is an alias for first()', function() {
-       expect(_.head).toEqual(_.first);
-     });
+  describe('head()', function() {
+   it('is an alias for first()', function() {
+     expect(_.head).toEqual(_.first);
+   });
   });
+
+  describe('take()', function() {
+    it('is an alias for first()', function() {
+        expect(_.take).toEqual(_.first);
+    })
+  })
 });
