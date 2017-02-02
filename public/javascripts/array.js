@@ -2,6 +2,7 @@ var _ = (function(){
   function _() {};
 
   var slice = Array.prototype.slice;
+  var pop = Array.prototype.pop;
 
 
   // _dw - seems the difference in first() & initial() is how they deal with N. With first(), use N to declare that you want 'the first N of an array'. With initial, you are using N to declare that you want all of the array execpt 'N'
@@ -14,6 +15,15 @@ var _ = (function(){
 
   _.initial = function(array, n, guard) {
     return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
+  };
+
+  _.rest = function(array, n) {
+    var num = ( n == null || n );
+    // _dw seems that slice's api works that the second argument can either be a boolean or a number.
+    // if it's a boolean (true) then it will slice the first element
+    // if it's false, then it does not slice first element
+    // if it's a number, then it will slice the number of elements off the front and go until the end.
+    return slice.call(array, num);
   };
 
   return _;

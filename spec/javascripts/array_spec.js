@@ -82,4 +82,32 @@ describe('Arrays', function() {
       expect(_.flatten(result)).toEqual([1, 2, 1, 2]);
     })
   });
+
+  describe('_.rest()', function(){
+    var numbers = [1, 2, 3, 4];
+
+    it('fetches all but the first element', function(){
+      expect(_.rest(numbers)).toEqual([2, 3, 4]);
+    });
+
+    it('returns the whole array when index is 0', function() {
+      expect(_.rest(numbers, 0)).toEqual([1, 2, 3, 4]);
+    });
+
+    it('returns elements starting at the given index', function() {
+      expect(_.rest(numbers,2)).toEqual([3, 4]);
+    });
+
+    // var result = (function(){ return _(arguments).rest();}(1, 2, 3, 4));
+
+    xit('works on an agruments object', function(){
+      expect(result).toEqual([2, 3, 4]);
+    });
+
+    // result = _.map([[1, 2, 3], [1, 2, 3]], _.rest);
+
+    xit('works well with _.map', function() {
+      expect(_.flatten(result)).toEqual([2, 3, 2, 3]);
+    });
+  });
 });
