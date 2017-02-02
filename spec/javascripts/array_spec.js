@@ -1,11 +1,11 @@
-describe("Arrays", function() {
-  describe("first()", function() {
+describe('Arrays', function() {
+  describe('_.first()', function() {
     it('can pull out the first element of an array', function(){
       expect(_.first([1,2,3])).toBe(1);
       expect(_.first(['a', 'b', 'c'])).toBe('a');
     });
 
-    xit('can perform OO-style "first()"', function() {
+    xit('can perform OO-style "_.first()"', function() {
         expect(_([1,2,3]).first()).toBe(1);
     });
 
@@ -41,11 +41,26 @@ describe("Arrays", function() {
 
     it('return undefined when called on an empty array', function() {
       expect(_.first([])).toEqual(void 0);
-    })
+    });
+
+
+    describe('has the following aliases', function() {
+      describe('_.head()', function() {
+       it('is an alias for _.first()', function() {
+         expect(_.head).toEqual(_.first);
+       });
+      });
+
+      describe('_.take()', function() {
+        it('is an alias for _.first()', function() {
+            expect(_.take).toEqual(_.first);
+        });
+      });
+    });
   });
 
-  describe("initial()", function() {
-    it("returns all but last element", function(){
+  describe('_.initial()', function() {
+    it('returns all but last element', function(){
       expect(_.initial([1, 2, 3, 4, 5])).toEqual([1, 2, 3, 4])
     });
 
@@ -67,16 +82,4 @@ describe("Arrays", function() {
       expect(_.flatten(result)).toEqual([1, 2, 1, 2]);
     })
   });
-
-  describe('head()', function() {
-   it('is an alias for first()', function() {
-     expect(_.head).toEqual(_.first);
-   });
-  });
-
-  describe('take()', function() {
-    it('is an alias for first()', function() {
-        expect(_.take).toEqual(_.first);
-    })
-  })
 });
