@@ -1,7 +1,7 @@
-(function() {
-  var _ = typeof require == 'function' ? require('..') : window._;
+// (function() {
+  // var _ = typeof require == 'function' ? require('..') : window._;
 
-  QUnit.module('Arrays');
+  // QUnit.module('Arrays');
 
   // QUnit.test('first', function(assert) {
     // assert.strictEqual(_.first([1, 2, 3]), 1, 'can pull out the first element of an array');
@@ -104,16 +104,16 @@
   //   assert.deepEqual(result, [[1], [3]], 'works well with _.map');
   // });
 
-  QUnit.test('flatten', function(assert) {
+  // QUnit.test('flatten', function(assert) {
 
     // assert.deepEqual(_.flatten(null), [], 'supports null');
 
     // assert.deepEqual(_.flatten(void 0), [], 'supports undefined');
 
 
-    assert.deepEqual(_.flatten([[], [[]], []]), [], 'supports empty arrays');
+    // assert.deepEqual(_.flatten([[], [[]], []]), [], 'supports empty arrays');
 
-    assert.deepEqual(_.flatten([[], [[]], []], true), [[]], 'can shallowly flatten empty arrays');
+    // assert.deepEqual(_.flatten([[], [[]], []], true), [[]], 'can shallowly flatten empty arrays');
 
     var list = [1, [2], [3, [[[4]]]]];
 

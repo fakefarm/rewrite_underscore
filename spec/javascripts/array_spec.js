@@ -187,6 +187,7 @@ describe('Arrays', function() {
   });
 
   describe('_.flatten()', function() {
+
     it('supports null', function(){
       expect(_.flatten(null)).toEqual([]);
     });
@@ -197,6 +198,10 @@ describe('Arrays', function() {
 
     xit('supports empty arrays', function(){
       expect(_.flatten([[], [], []])).toEqual([]);
+    });
+
+    it('can shallowly flatten empty arrays', function () {
+      expect(_.flatten([[], [[]], []],true)).toEqual([[]])
     });
   });
 });
