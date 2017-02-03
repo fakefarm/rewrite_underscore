@@ -50,7 +50,11 @@ var _ = (function(){
 
   _.isArray = nativeIsArray || function(obj) {
     return toString.call(obj) === '[object Array]';
-  }
+  };
+
+  _.isArguments = function(obj) {
+    return toString.call(obj) === '[object Arguments]';
+  };
 
   return _;
 }());

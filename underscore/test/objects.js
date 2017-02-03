@@ -606,14 +606,20 @@
     });
   }
 
-  QUnit.test('isArguments', function(assert) {
-    var args = (function(){ return arguments; }(1, 2, 3));
-    assert.notOk(_.isArguments('string'), 'a string is not an arguments object');
-    assert.notOk(_.isArguments(_.isArguments), 'a function is not an arguments object');
-    assert.ok(_.isArguments(args), 'but the arguments object is an arguments object');
-    assert.notOk(_.isArguments(_.toArray(args)), 'but not when it\'s converted into an array');
+  // QUnit.test('isArguments', function(assert) {
+
+    // var args = (function(){ return arguments; }(1, 2, 3));
+
+    // assert.notOk(_.isArguments('string'), 'a string is not an arguments object');
+
+    // assert.notOk(_.isArguments(_.isArguments), 'a function is not an arguments object');
+
+    // assert.ok(_.isArguments(args), 'but the arguments object is an arguments object');
+
+    // assert.notOk(_.isArguments(_.toArray(args)), 'but not when it\'s converted into an array');
+
     assert.notOk(_.isArguments([1, 2, 3]), 'and not vanilla arrays.');
-  });
+  // });
 
   QUnit.test('isObject', function(assert) {
     assert.ok(_.isObject(arguments), 'the arguments object is object');
