@@ -185,4 +185,18 @@ describe('Arrays', function() {
       expect(result).toEqual( [[1], [3]]);
     });
   });
+
+  describe('_.flatten()', function() {
+    it('supports null', function(){
+      expect(_.flatten(null)).toEqual([]);
+    });
+
+    it('supports undefined', function() {
+      expect(_.flatten(void 0)).toEqual([])
+    });
+
+    xit('supports empty arrays', function(){
+      expect(_.flatten([[], [], []])).toEqual([]);
+    });
+  });
 });

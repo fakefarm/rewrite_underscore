@@ -630,11 +630,14 @@
     assert.ok(_.isObject(new String('string')), 'but new String()');
   });
 
-  QUnit.test('isArray', function(assert) {
-    assert.notOk(_.isArray(void 0), 'undefined vars are not arrays');
-    assert.notOk(_.isArray(arguments), 'the arguments object is not an array');
-    assert.ok(_.isArray([1, 2, 3]), 'but arrays are');
-  });
+  // QUnit.test('isArray', function(assert) {
+
+    // assert.notOk(_.isArray(void 0), 'undefined vars are not arrays');
+
+    // assert.notOk(_.isArray(arguments), 'the arguments object is not an array');
+
+    // assert.ok(_.isArray([1, 2, 3]), 'but arrays are');
+  // });
 
   QUnit.test('isString', function(assert) {
     var obj = new String('I am a string object');

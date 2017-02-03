@@ -1,9 +1,12 @@
 var _ = (function(){
   function _() {};
 
-  var slice = Array.prototype.slice;
-  var pop = Array.prototype.pop;
+  var slice = Array.prototype.slice,
+      pop = Array.prototype.pop,
+      nativeIsArray = Array.isArray;
 
+ //- _Array functions -----------------
+ //------------------------------------
 
   // _dw - seems the difference in first() & initial() is how they deal with N. With first(), use N to declare that you want 'the first N of an array'. With initial, you are using N to declare that you want all of the array execpt 'N'
 
@@ -32,7 +35,22 @@ var _ = (function(){
     return _.rest(array, Math.max(0, array.length - n));
   };
 
+  // _dw coming back to compact
   _.compact = function(array) {};
+
+  _.flatten = function(array){
+    if (array == null) return [];
+    //  _dw
+    // 1. need to build flatten.
+    // 2. flatten uses _.isArray() & _.isAgruments()
+  };
+
+  //- _Object functions ----------------
+  //------------------------------------
+
+  _.isArray = nativeIsArray || function(obj) {
+    return toString.call(obj) === '[object Array]';
+  }
 
   return _;
 }());
