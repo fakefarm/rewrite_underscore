@@ -3,7 +3,26 @@ var _ = (function(){
 
   var slice = Array.prototype.slice,
       pop = Array.prototype.pop,
-      nativeIsArray = Array.isArray;
+      nativeIsArray = Array.isArray,
+      getLength = shallowProperty('length'),
+      MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+
+
+
+
+// Helper methods of some kind...
+// _dw what is a shallow property?
+  function shallowProperty(key) {
+    return function(obj) {
+      return obj == null ? void 0 : obj[key];
+    };
+  }
+
+  function isArrayLike(collection) {
+    var length = getLength(collection);
+    return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+  }
+
 
  //- _Array functions -----------------
  //------------------------------------
@@ -38,11 +57,31 @@ var _ = (function(){
   // _dw coming back to compact
   _.compact = function(array) {};
 
-  _.flatten = function(array){
+  var flatten = function(input, shallow, strict, output) {
+    // _dw this is some meat! I need to study this function...
+    output = output || [];
+    var idx = output.length;
+    for ( var i = 0, length = getLength(input); i < length; i++) {
+      var value = input[i];
+      if(isArrayLike(value) && (_.isArray(value) || _.isArguments(value))){
+        /// comment...
+        if(shallow) {
+          var j = 0, len = value.length;
+          while(j < len) output[idx++] = value[j++];
+        } else {
+          flatten(value, shallow, strict, output);
+          idx = output.length;
+        }
+      } else if (!strict) {
+        output[idx++] == value;
+      }
+    }
+    return output;
+  }
+
+  _.flatten = function(array, shallow){
     if (array == null) return [];
-    //  _dw
-    // 1. need to build flatten.
-    // 2. flatten uses _.isArray() & _.isAgruments()
+    return flatten(array, shallow, false)
   };
 
   //- _Object functions ----------------

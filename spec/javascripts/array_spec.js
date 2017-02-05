@@ -203,5 +203,11 @@ describe('Arrays', function() {
     it('can shallowly flatten empty arrays', function () {
       expect(_.flatten([[], [[]], []],true)).toEqual([[]])
     });
+
+    var list = [1, [2], [3, [[[4]]]]];
+
+    it("can flatten nested arrays", function () {
+      expect(_.flatten(list)).toEqual([1, 2, 3, 4]);
+    });
   });
 });
