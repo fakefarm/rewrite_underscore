@@ -196,7 +196,7 @@ describe('Arrays', function() {
       expect(_.flatten(void 0)).toEqual([])
     });
 
-    xit('supports empty arrays', function(){
+    it('supports empty arrays', function(){
       expect(_.flatten([[], [], []])).toEqual([]);
     });
 

@@ -64,7 +64,6 @@ var _ = (function(){
     for ( var i = 0, length = getLength(input); i < length; i++) {
       var value = input[i];
       if(isArrayLike(value) && (_.isArray(value) || _.isArguments(value))){
-        /// comment...
         if(shallow) {
           var j = 0, len = value.length;
           while(j < len) output[idx++] = value[j++];
