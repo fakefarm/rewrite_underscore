@@ -73,7 +73,7 @@ var _ = (function(){
           idx = output.length;
         }
       } else if (!strict) {
-        output[idx++] == value;
+        output[idx++] = value;
       }
     }
     return output;
