@@ -7,7 +7,26 @@ var _ = (function(){
       getLength = shallowProperty('length'),
       MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
 
-
+var optimizeCb = function(func, context, argCount) {
+// _dw take some time to tinker with this one!
+  if(context === void 0) return func;
+  switch (argCount) {
+    case 1: return function(value) {
+      return func.call(context, value);
+    };
+    // The 2-parameter case has been omitted only because no current consumers made use of it.
+    case null:
+    case 3: return function(value, index, collection) {
+      return func.call(context, value, index, collection);
+    };
+    case 4: return function(accumulator, value, index, collection) {
+      return func.call(context, accumulator, value, index, collection);
+    };
+  }
+  return function() {
+    return func.apply(context, arguments);
+  };
+};
 
 
 // Helper methods of some kind...
