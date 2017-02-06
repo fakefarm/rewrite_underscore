@@ -39,4 +39,26 @@ describe("Objects", function() {
       expect(_.isArguments([1, 2, 3])).toBe(false);
     });
   });
+
+  describe("_.isFunction()", function () {
+    it("undefined vars are not functions", function () {
+      expect(_.isFunction(void 0)).toBe(false);
+    });
+
+    it("arrays are not functions", function () {
+      expect(_.isFunction([1, 2, 3])).toBe(false);
+    });
+
+    it("strings are not functions", function () {
+      expect(_.isFunction('moe')).toBe(false);
+    });
+
+    it("functions are functions", function () {
+      expect(_.isFunction(_.isFunction)).toBe(true);
+    });
+
+    it("even anonymous ones", function () {
+      expect(_.isFunction(function(){})).toBe(true);
+    });
+  });
 });

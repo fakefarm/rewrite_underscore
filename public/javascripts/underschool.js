@@ -129,6 +129,9 @@ var _ = (function(){
         case 1: return func.call(this, arguments[0], rest);
         case 2: return func.call(this, arguments[0], arguments[1], rest);
       }
+  _.isFunction = function(obj) {
+    return typeof obj == 'function' || false
+  }
 
       var args = Array(startIndex + 1);
       for (index = 0; index < startIndex; index++) {
