@@ -115,20 +115,22 @@
 
     // assert.deepEqual(_.flatten([[], [[]], []], true), [[]], 'can shallowly flatten empty arrays');
 
-    var list = [1, [2], [3, [[[4]]]]];
+    // var list = [1, [2], [3, [[[4]]]]];
 
-    assert.deepEqual(_.flatten(list), [1, 2, 3, 4], 'can flatten nested arrays');
+    // assert.deepEqual(_.flatten(list), [1, 2, 3, 4], 'can flatten nested arrays');
 
-    assert.deepEqual(_.flatten(list, true), [1, 2, 3, [[[4]]]], 'can shallowly flatten nested arrays');
-    var result = (function(){ return _.flatten(arguments); }(1, [2], [3, [[[4]]]]));
-
-    assert.deepEqual(result, [1, 2, 3, 4], 'works on an arguments object');
-    list = [[1], [2], [3], [[4]]];
-
-    assert.deepEqual(_.flatten(list, true), [1, 2, 3, [4]], 'can shallowly flatten arrays containing only other arrays');
+    // assert.deepEqual(_.flatten(list, true), [1, 2, 3, [[[4]]]], 'can shallowly flatten nested arrays');
 
 
-    assert.strictEqual(_.flatten([_.range(10), _.range(10), 5, 1, 3], true).length, 23, 'can flatten medium length arrays');
+    // var result = (function(){ return _.flatten(arguments); }(1, [2], [3, [[[4]]]]));
+    //
+    // assert.deepEqual(result, [1, 2, 3, 4], 'works on an arguments object');
+
+    // list = [[1], [2], [3], [[4]]];
+    // assert.deepEqual(_.flatten(list, true), [1, 2, 3, [4]], 'can shallowly flatten arrays containing only other arrays');
+
+
+    // assert.strictEqual(_.flatten([_.range(10), _.range(10), 5, 1, 3], true).length, 23, 'can flatten medium length arrays');
 
     assert.strictEqual(_.flatten([_.range(10), _.range(10), 5, 1, 3]).length, 23, 'can shallowly flatten medium length arrays');
 

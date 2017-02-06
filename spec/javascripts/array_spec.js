@@ -209,5 +209,24 @@ describe('Arrays', function() {
     it("can flatten nested arrays", function () {
       expect(_.flatten(list)).toEqual([1, 2, 3, 4]);
     });
+
+    it("can shallowly flatten nested arrays", function () {
+      expect(_.flatten(list, true)).toEqual([1, 2, 3, [[[4]]]]);
+    });
+
+    it("works on an arguments object", function () {
+      var result = (function() { return _.flatten(arguments);}(1, [2], [3, [[[4]]]]))
+      expect(result).toEqual([1, 2, 3, 4])
+    });
+
+    it("can shallowly flatten arrays containing other arrays", function () {
+      var list = [[1], [2], [3], [[4]]];
+      expect(_.flatten(list, true)).toEqual([1,2,3,[4]]);
+    });
+
+    xit("can flatten medium length arrays", function () {
+      // _dw need range()
+      expect(_.flatten([_.range(10), _.range(10), 5, 1, 3], true).length).toBe(23);
+    });
   });
 });
