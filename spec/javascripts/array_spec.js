@@ -224,51 +224,75 @@ describe('Arrays', function() {
       expect(_.flatten(list, true)).toEqual([1,2,3,[4]]);
     });
 
-    xit("can flatten medium length arrays", function () {
-      // _dw need range()
+    it("can flatten medium length arrays", function () {
       expect(_.flatten([_.range(10), _.range(10), 5, 1, 3], true).length).toBe(23);
     });
 
-    describe("_.range()", function () {
-      it("0 as a first argument generates an empty array", function () {
-        expect(_.range(0)).toEqual([]);
-      });
+    it("can shallowly flatten medium length arrays", function () {
+      expect(_.flatten([_.range(10), _.range(10), 5, 1, 3]).length).toBe(23);
+    });
 
-      it("a single positive argument generates an array of elements 0,1,2..,n-1", function () {
-        expect(_.range(4)).toEqual([0, 1, 2, 3]);
-      });
+    it("can handle massive arrays", function () {
+      expect(_.flatten([new Array(1000000), _.range(56000), 5, 1, 3]).length).toBe(1056003);
+    });
 
-      it("two arguments a &amp; b, a < b generates an array of elements a, a+1,a+2,...,b-2, b-1", function () {
-        expect(_.range(5, 8)).toEqual([5, 6, 7]);
-      });
+    it("can handle massive arrays in shallow mode", function () {
+      expect(_.flatten([new Array(1000000), _.range(56000),5,1,3], true).length).toBe(1056003);
+    });
 
-      it("three arguments a & b & c, c < b-a, a < b generates an array of elements a, a+c, a+2c, ..., b - (multiplier of a) < c", function () {
-        expect(_.range(3, 10, 3)).toEqual([3, 6, 9]);
-      });
+    var x = _.range(1000000);
+    for( var i = 0; i < 1000; i++)
+    x = [x];
 
-      it("three arguments a & b, b & c, c > b-a, a < b, generates an array with a single element, equal to a ", function () {
-        expect(_.range(3, 10, 15)).toEqual([3]);
-      });
+    it("can handle very deep arrays", function () {
+      expect(_.flatten(x)).toEqual(_.range(1000000));
+    });
 
-      it("three arguments a & b & c, a > b, c < 0 generates an array of elements a, a-c, a-2c and ends with the number not less than b", function () {
-        expect(_.range(12, 7, -2)).toEqual([12, 10, 8]);
-      });
+    it("can handle very deep arrays in shallow mode", function () {
+      expect(_.flatten(x, true)).toEqual(x[0]);
+    });
+  });
 
-      it("final example in the Python docs", function () {
-        expect(_.range(0, -10, -1)).toEqual([0, -1, -2, -3, -4, -5, -6, -7, -8, -9]);
-      });
+  describe("_.range()", function () {
 
-      it("should preserve -0", function () {
-        expect(1 / _.range(-0, 1)[0]).toEqual(-Infinity);
-      });
+    it("0 as a first argument generates an empty array", function () {
+      expect(_.range(0)).toEqual([]);
+    });
 
-      it("negative range generates descending array", function () {
-        expect(_.range(8,5)).toEqual([8,7,6]);
-      });
+    it("a single positive argument generates an array of elements 0,1,2..,n-1", function () {
+      expect(_.range(4)).toEqual([0, 1, 2, 3]);
+    });
 
-      it("negative range generates descending array", function () {
-        expect(_.range(-3)).toEqual([0, -1, -2]);
-      });
+    it("two arguments a &amp; b, a < b generates an array of elements a, a+1,a+2,...,b-2, b-1", function () {
+      expect(_.range(5, 8)).toEqual([5, 6, 7]);
+    });
+
+    it("three arguments a & b & c, c < b-a, a < b generates an array of elements a, a+c, a+2c, ..., b - (multiplier of a) < c", function () {
+      expect(_.range(3, 10, 3)).toEqual([3, 6, 9]);
+    });
+
+    it("three arguments a & b, b & c, c > b-a, a < b, generates an array with a single element, equal to a ", function () {
+      expect(_.range(3, 10, 15)).toEqual([3]);
+    });
+
+    it("three arguments a & b & c, a > b, c < 0 generates an array of elements a, a-c, a-2c and ends with the number not less than b", function () {
+      expect(_.range(12, 7, -2)).toEqual([12, 10, 8]);
+    });
+
+    it("final example in the Python docs", function () {
+      expect(_.range(0, -10, -1)).toEqual([0, -1, -2, -3, -4, -5, -6, -7, -8, -9]);
+    });
+
+    it("should preserve -0", function () {
+      expect(1 / _.range(-0, 1)[0]).toEqual(-Infinity);
+    });
+
+    it("negative range generates descending array", function () {
+      expect(_.range(8,5)).toEqual([8,7,6]);
+    });
+
+    it("negative range generates descending array", function () {
+      expect(_.range(-3)).toEqual([0, -1, -2]);
     });
   });
 });
