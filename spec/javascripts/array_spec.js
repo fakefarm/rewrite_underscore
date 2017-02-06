@@ -228,5 +228,47 @@ describe('Arrays', function() {
       // _dw need range()
       expect(_.flatten([_.range(10), _.range(10), 5, 1, 3], true).length).toBe(23);
     });
+
+    describe("_.range()", function () {
+      it("0 as a first argument generates an empty array", function () {
+        expect(_.range(0)).toEqual([]);
+      });
+
+      it("a single positive argument generates an array of elements 0,1,2..,n-1", function () {
+        expect(_.range(4)).toEqual([0, 1, 2, 3]);
+      });
+
+      it("two arguments a &amp; b, a < b generates an array of elements a, a+1,a+2,...,b-2, b-1", function () {
+        expect(_.range(5, 8)).toEqual([5, 6, 7]);
+      });
+
+      it("three arguments a & b & c, c < b-a, a < b generates an array of elements a, a+c, a+2c, ..., b - (multiplier of a) < c", function () {
+        expect(_.range(3, 10, 3)).toEqual([3, 6, 9]);
+      });
+
+      it("three arguments a & b, b & c, c > b-a, a < b, generates an array with a single element, equal to a ", function () {
+        expect(_.range(3, 10, 15)).toEqual([3]);
+      });
+
+      it("three arguments a & b & c, a > b, c < 0 generates an array of elements a, a-c, a-2c and ends with the number not less than b", function () {
+        expect(_.range(12, 7, -2)).toEqual([12, 10, 8]);
+      });
+
+      it("final example in the Python docs", function () {
+        expect(_.range(0, -10, -1)).toEqual([0, -1, -2, -3, -4, -5, -6, -7, -8, -9]);
+      });
+
+      it("should preserve -0", function () {
+        expect(1 / _.range(-0, 1)[0]).toEqual(-Infinity);
+      });
+
+      it("negative range generates descending array", function () {
+        expect(_.range(8,5)).toEqual([8,7,6]);
+      });
+
+      it("negative range generates descending array", function () {
+        expect(_.range(-3)).toEqual([0, -1, -2]);
+      });
+    });
   });
 });
