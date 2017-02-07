@@ -621,17 +621,22 @@
     assert.notOk(_.isArguments([1, 2, 3]), 'and not vanilla arrays.');
   // });
 
-  QUnit.test('isObject', function(assert) {
-    assert.ok(_.isObject(arguments), 'the arguments object is object');
-    assert.ok(_.isObject([1, 2, 3]), 'and arrays');
+  // QUnit.test('isObject', function(assert) {
+  //   assert.ok(_.isObject(arguments), 'the arguments object is object');
+    // assert.ok(_.isObject([1, 2, 3]), 'and arrays');
+
     if (testElement) {
       assert.ok(_.isObject(testElement), 'and DOM element');
     }
-    assert.ok(_.isObject(function() {}), 'and functions');
-    assert.notOk(_.isObject(null), 'but not null');
-    assert.notOk(_.isObject(void 0), 'and not undefined');
-    assert.notOk(_.isObject('string'), 'and not string');
-    assert.notOk(_.isObject(12), 'and not number');
+
+    // assert.ok(_.isObject(function() {}), 'and functions');
+    // assert.notOk(_.isObject(null), 'but not null');
+    // assert.notOk(_.isObject(void 0), 'and not undefined');
+
+    // assert.notOk(_.isObject('string'), 'and not string');
+
+    // assert.notOk(_.isObject(12), 'and not number');
+
     assert.notOk(_.isObject(true), 'and not boolean');
     assert.ok(_.isObject(new String('string')), 'but new String()');
   });

@@ -61,4 +61,41 @@ describe("Objects", function() {
       expect(_.isFunction(function(){})).toBe(true);
     });
   });
+  describe("_.isObject", function () {
+    it("this arguments object is object", function () {
+      expect(_.isObject(arguments)).toEqual(true);
+    });
+
+    it("and arrays", function () {
+      expect(_.isObject([1, 2, 3])).toEqual(true);
+    });
+
+    it("and functions", function () {
+      expect(_.isObject(function(){})).toEqual(true);
+    });
+
+    it("but not null", function () {
+      expect(_.isObject(null)).toEqual(false);
+    });
+
+    it("not undefined", function () {
+      expect(_.isObject(void 0)).toEqual(false);
+    });
+
+    it("and not string", function () {
+      expect(_.isObject('string')).toEqual(false);
+    });
+
+    it("and not number", function () {
+      expect(_.isObject(12)).toEqual(false);
+    });
+
+    it("and not boolean", function () {
+      expect(_.isObject(true)).toEqual(false);
+    });
+
+    it("but new String()", function () {
+      expect(_.isObject(new String('string'))).toEqual(true);
+    });
+  });
 });
