@@ -4,6 +4,7 @@ var _ = (function(){
   var slice = Array.prototype.slice,
       pop = Array.prototype.pop,
       nativeIsArray = Array.isArray,
+      nativeKeys = Object.keys,
       getLength = shallowProperty('length'),
       MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
 
@@ -159,6 +160,15 @@ var optimizeCb = function(func, context, argCount) {
       args[startIndex] = rest;
       return func.apply(this, args);
     };
+  // _keys
+  // Retrieve the names of an object's own properties. Delegates to ES5's native Object.keys
+
+  _.keys = function(obj) {
+    if (!_.isObject(obj)) return [];
+    if (nativeKeys) return nativeKeys(obj);
+    var keys = [];
+    for (var key in obj) if (_.has(obj, key)) keys.push(key);
+    return keys;
   };
 
   _.restArgs = restArgs;

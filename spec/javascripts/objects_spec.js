@@ -61,6 +61,27 @@ describe("Objects", function() {
       expect(_.isFunction(function(){})).toBe(true);
     });
   });
+
+  describe("_.keys", function () {
+    it("can extract the keys from an object", function () {
+      expect(_.keys({one: 1, two: 2})).toEqual(['one', 'two']);
+    });
+
+    var a = []; a[1] = 0;
+
+    it("is not fooled by sparse arrays", function () {
+      expect(_.keys(a)).toEqual(['1']);
+    });
+
+    it("Types other than Object returns an empty array", function () {
+      expect(_.keys(null)).toEqual([]);
+      expect(_.keys(void 0)).toEqual([]);
+      expect(_.keys(1)).toEqual([]);
+      expect(_.keys('a')).toEqual([]);
+      expect(_.keys(true)).toEqual([]);
+    });
+  });
+
   describe("_.isObject", function () {
     it("this arguments object is object", function () {
       expect(_.isObject(arguments)).toEqual(true);
