@@ -43,9 +43,42 @@ var optimizeCb = function(func, context, argCount) {
     return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
   }
 
+  //- _function functions --------------
+  //----------------------------------------------------
+
+  var restArgs = function(func, startIndex) {
+    startIndex = startIndex == null ? func.length - 1 : +startIndex;
+    return function() {
+      var length = Math.max(arguments.length - startIndex, 0),
+          rest = Array(length),
+          index = 0;
+      for (; index < length; index++) {
+        rest[index] = arguments[index + startIndex];
+      }
+      switch (startIndex) {
+        case 0: return func.call(this, rest);
+        case 1: return func.call(this, arguments[0], rest);
+        case 2: return func.call(this, arguments[0], arguments[1], rest);
+      }
+      var args = Array(startIndex + 1);
+      for (index = 0; index < startIndex; index++) {
+        args[index] = arguments[index];
+      }
+      args[startIndex] = rest;
+      return func.apply(this, args);
+    };
+  };
+
+  _.difference = restArgs(function(array, rest){
+    rest = flatten(rest, true, true);
+    return _.filter(array, function(value) {
+      return !_.contains(rest, value);
+    });
+  });
+
 
  //- _Array functions -----------------
- //------------------------------------
+ //----------------------------------------------------
 
   // _dw - seems the difference in first() & initial() is how they deal with N. With first(), use N to declare that you want 'the first N of an array'. With initial, you are using N to declare that you want all of the array execpt 'N'
 
@@ -121,8 +154,13 @@ var optimizeCb = function(func, context, argCount) {
     return range;
   }
 
+  _.without = restArgs(function(array, otherArrays){
+      return _.difference(array, otherArrays);
+  })
+
+
   //- _Object functions ----------------
-  //------------------------------------
+  //----------------------------------------------------
 
   _.isArray = nativeIsArray || function(obj) {
     return toString.call(obj) === '[object Array]';
@@ -132,34 +170,58 @@ var optimizeCb = function(func, context, argCount) {
     return toString.call(obj) === '[object Arguments]';
   };
 
-  //- _function functions --------------
-  //------------------------------------
+  _.restArgs = restArgs;
 
-  var restArgs = function(func, startIndex) {
-    startIndex = startIndex == null ? func.length - 1 : +startIndex;
-    return function() {
-      var length = Math. max(arguments.length - startIndex, 0),
-          rest = Array(length),
-          index = 0;
-      for (; index < length; index++) {
-        rest[index] = arguments[index + startIndex];
-      }
-      switch (startIndex) {
-        case 0: return func.call(this, rest);
-        case 1: return func.call(this, arguments[0], rest);
-        case 2: return func.call(this, arguments[0], arguments[1], rest);
-      }
   _.isFunction = function(obj) {
     return typeof obj == 'function' || false
   }
 
-      var args = Array(startIndex + 1);
-      for (index = 0; index < startIndex; index++) {
-        args[index] = arguments[index];
+  //- _Collection functions ----------------------------
+  //----------------------------------------------------
+
+  var builtinIteratee;
+
+  // An internal function to generate callbacks that can be applied to each element in a collection, returning the desired result - either `identity`, an arbitrary callback, a property matcher, or a property accessor
+  var cb = function(value, context, argCount) {
+    if(_.iteratee !== builtinIteratee) return _.iteratee(value, context);
+    if (value == null) return _.identity;
+    if (_.isFunction(value)) return optimizeCb(value, context, argCount);
+    if (_.isObject(value) && !_.isArray(value)) return _.matcher(value);
+    return _.property(value);
+  }
+
+  // External wrapper for our callback generator. Users may customize `_.iteratee` if they want additional predicate/iteratee shorthand styles. This abstraction hides the internal-only argCount argument.
+
+  _.iteratee = builtinIteratee = function(value, context) {
+    return cb(value, context, Infinity);
+  }
+
+  // _filter
+  _.filter = function(obj, predicate, context) {
+    var results = [];
+    predicate = cb(predicate, context);
+    _.each(obj, function(value, index, list) {
+      if(predicate(value, index, list)) results.push(value);
+    });
+    return results;
+  }
+
+  _.each = _.forEach = function(obj, iteratee, context) {
+    iteratee = optimizeCb(iteratee, context);
+    var i, length;
+    if (isArrayLike(obj)) {
+      for ( i = 0, length = obj.length; i < length; i++) {
+        iteratee(obj[i], i, obj);
       }
-      args[startIndex] = rest;
-      return func.apply(this, args);
+    } else {
+      var keys = _.keys(obj);
+      for (i = 0, length = keys.length; i < length; i++) {
+        iteratee(obj[keys[i]], keys[i], obj);
+      }
     };
+    return obj;
+  };
+
   // _keys
   // Retrieve the names of an object's own properties. Delegates to ES5's native Object.keys
 
@@ -171,7 +233,10 @@ var optimizeCb = function(func, context, argCount) {
     return keys;
   };
 
-  _.restArgs = restArgs;
+  _.isObject = function (obj) {
+    var type = typeof obj;
+    return type === 'function' || type === 'object' && !!obj;
+  }
 
   return _;
 }());
