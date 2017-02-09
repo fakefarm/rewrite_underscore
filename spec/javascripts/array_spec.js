@@ -295,4 +295,88 @@ describe('Arrays', function() {
       expect(_.range(-3)).toEqual([0, -1, -2]);
     });
   });
+  describe("_.indexOf()", function () {
+    it("can compute indexOf", function () {
+      var numbers = [1,2,3];
+      expect(_.indexOf(numbers, 2)).toEqual(1);
+    });
+
+    it("works on an arguments object", function () {
+      var result = (function(){ return _.indexOf(arguments, 2); }(1, 2, 3));
+      expect(result).toEqual(1);
+    });
+
+    it("handles these situations", function () {
+      var val;
+      _.each([null, void 0, [], false], function(val){
+        var msg = 'Handles: ' + (_.isArray(val) ? '[]' : val);
+      });
+      expect(_.indexOf(val, 2)).toEqual(-1);
+      expect(_.indexOf(val, 2, -1)).toEqual(-1);
+      expect(_.indexOf(val, 2, -20)).toEqual(-1);
+      expect(_.indexOf(val, 2, 15)).toEqual(-1);
+    });
+
+    it("35 is not in the list", function () {
+      var num = 35;
+      numbers = [10, 20, 30, 40, 50];
+      var index = _.indexOf(numbers, num, true);
+      expect(index).toEqual(-1);
+    });
+
+    it("40 is in the list", function () {
+      var numbers = _.range(10, 51, 10);
+      var num = 40
+      index = _.indexOf(numbers, num, true);
+      expect(index).toEqual(3);
+    });
+
+    it("40 is in the list but 6 isn't", function () {
+      var numbers = [1, 40, 40, 40, 40, 40, 40, 40, 50, 60, 70], num = 40;
+      expect(_.indexOf(numbers, num, true)).toEqual(1);
+      expect(_.indexOf(numbers, 6, true)).toEqual(-1);
+    });
+
+    it("sorted indexOf does not use binary search", function () {
+      expect(_.indexOf(_.range(1,7)), 5, true).toEqual(-1);
+    });
+
+    xit("non-nums as fromIndex make indexOf assume sorted", function () {
+      // _dw need _every
+      expect(_.every(['1', [], {}, null])).toEqual(function() {
+        return _.indexOf(numbers, num, {}) === 1;
+      });
+    });
+
+    it("supports the fromIndex argument", function () {
+      var numbers = [1, 2, 3, 1, 2, 3, 1, 2, 3],
+          index = _.indexOf(numbers, 2, 5);
+      expect(index).toEqual(7);
+    });
+
+    it("treats sparse arrays as if they were dense", function () {
+      var index = _.indexOf([,,, 0], void 0);
+      expect(index).toEqual(0);
+    });
+
+    var array1 = [1, 2, 3, 1, 2, 3];
+
+    it("neg 'fromIndex' starts at the right index", function () {
+      expect(_.indexOf(array1, 1, -3)).toEqual(3);
+      expect(_.indexOf(array1, 1, -2)).toEqual(-1);
+      expect(_.indexOf(array1, 2, -3)).toEqual(4);
+      _.each([-6, -8, -Infinity], function (fromIndex) {
+        expect(_.indexOf(array1, 1, fromIndex)).toEqual(0);
+      });
+    });
+
+    it("makes a zero with this thing", function () {
+      expect(_.indexOf([1, 2, 3], 1, true)).toEqual(0);
+    });
+
+    it("empty array with truthy 'isSorted' return -1", function () {
+      var idx = _.indexOf([], void 0, true);
+      expect(idx).toEqual(-1);
+    });
+  });
 });

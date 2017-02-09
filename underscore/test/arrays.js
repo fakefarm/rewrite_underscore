@@ -334,56 +334,76 @@
     assert.deepEqual(_.object(null), {}, 'handles nulls');
   });
 
-  QUnit.test('indexOf', function(assert) {
-    var numbers = [1, 2, 3];
-    assert.strictEqual(_.indexOf(numbers, 2), 1, 'can compute indexOf');
-    var result = (function(){ return _.indexOf(arguments, 2); }(1, 2, 3));
-    assert.strictEqual(result, 1, 'works on an arguments object');
+  // QUnit.test('indexOf', function(assert) {
+    // var numbers = [1, 2, 3];
+    //
+    // assert.strictEqual(_.indexOf(numbers, 2), 1, 'can compute indexOf');
 
-    _.each([null, void 0, [], false], function(val) {
-      var msg = 'Handles: ' + (_.isArray(val) ? '[]' : val);
-      assert.strictEqual(_.indexOf(val, 2), -1, msg);
-      assert.strictEqual(_.indexOf(val, 2, -1), -1, msg);
-      assert.strictEqual(_.indexOf(val, 2, -20), -1, msg);
-      assert.strictEqual(_.indexOf(val, 2, 15), -1, msg);
-    });
+    // var result = (function(){ return _.indexOf(arguments, 2); }(1, 2, 3));
+    //
+    // assert.strictEqual(result, 1, 'works on an arguments object');
+    //
+    // _.each([null, void 0, [], false], function(val) {
+    //
+    //   var msg = 'Handles: ' + (_.isArray(val) ? '[]' : val);
+    //   assert.strictEqual(_.indexOf(val, 2), -1, msg);
+    //   assert.strictEqual(_.indexOf(val, 2, -1), -1, msg);
+    //   assert.strictEqual(_.indexOf(val, 2, -20), -1, msg);
+    //   assert.strictEqual(_.indexOf(val, 2, 15), -1, msg);
+    // });
 
-    var num = 35;
-    numbers = [10, 20, 30, 40, 50];
-    var index = _.indexOf(numbers, num, true);
-    assert.strictEqual(index, -1, '35 is not in the list');
+    // var num = 35;
+    // numbers = [10, 20, 30, 40, 50];
+    // var index = _.indexOf(numbers, num, true);
+    //
+    // assert.strictEqual(index, -1, '35 is not in the list');
 
-    numbers = [10, 20, 30, 40, 50]; num = 40;
-    index = _.indexOf(numbers, num, true);
-    assert.strictEqual(index, 3, '40 is in the list');
+    // numbers = [10, 20, 30, 40, 50]; num = 40;
+    // index = _.indexOf(numbers, num, true);
+    //
+    // assert.strictEqual(index, 3, '40 is in the list');
 
-    numbers = [1, 40, 40, 40, 40, 40, 40, 40, 50, 60, 70]; num = 40;
-    assert.strictEqual(_.indexOf(numbers, num, true), 1, '40 is in the list');
-    assert.strictEqual(_.indexOf(numbers, 6, true), -1, '6 isnt in the list');
-    assert.strictEqual(_.indexOf([1, 2, 5, 4, 6, 7], 5, true), -1, 'sorted indexOf doesn\'t uses binary search');
-    assert.ok(_.every(['1', [], {}, null], function() {
-      return _.indexOf(numbers, num, {}) === 1;
-    }), 'non-nums as fromIndex make indexOf assume sorted');
+    // numbers = [1, 40, 40, 40, 40, 40, 40, 40, 50, 60, 70]; num = 40;
+    //
+    // assert.strictEqual(_.indexOf(numbers, num, true), 1, '40 is in the list');
 
-    numbers = [1, 2, 3, 1, 2, 3, 1, 2, 3];
-    index = _.indexOf(numbers, 2, 5);
-    assert.strictEqual(index, 7, 'supports the fromIndex argument');
+    // assert.strictEqual(_.indexOf(numbers, 6, true), -1, '6 isnt in the list');
 
-    index = _.indexOf([,,, 0], void 0);
-    assert.strictEqual(index, 0, 'treats sparse arrays as if they were dense');
+    // assert.strictEqual(_.indexOf([1, 2, 5, 4, 6, 7], 5, true), -1, 'sorted indexOf doesn\'t uses binary search');
 
-    var array = [1, 2, 3, 1, 2, 3];
-    assert.strictEqual(_.indexOf(array, 1, -3), 3, 'neg `fromIndex` starts at the right index');
-    assert.strictEqual(_.indexOf(array, 1, -2), -1, 'neg `fromIndex` starts at the right index');
-    assert.strictEqual(_.indexOf(array, 2, -3), 4);
-    _.each([-6, -8, -Infinity], function(fromIndex) {
-      assert.strictEqual(_.indexOf(array, 1, fromIndex), 0);
-    });
-    assert.strictEqual(_.indexOf([1, 2, 3], 1, true), 0);
+    // assert.ok(_.every(['1', [], {}, null], function() {
+    //   return _.indexOf(numbers, num, {}) === 1;
+    // }), 'non-nums as fromIndex make indexOf assume sorted');
 
-    index = _.indexOf([], void 0, true);
-    assert.strictEqual(index, -1, 'empty array with truthy `isSorted` returns -1');
-  });
+    // numbers = [1, 2, 3, 1, 2, 3, 1, 2, 3];
+    // index = _.indexOf(numbers, 2, 5);
+    //
+    // assert.strictEqual(index, 7, 'supports the fromIndex argument');
+
+    // index = _.indexOf([,,, 0], void 0);
+
+    // assert.strictEqual(index, 0, 'treats sparse arrays as if they were dense');
+
+
+    // var array = [1, 2, 3, 1, 2, 3];
+    //
+    // assert.strictEqual(_.indexOf(array, 1, -3), 3, 'neg `fromIndex` starts at the right index');
+    //
+    // assert.strictEqual(_.indexOf(array, 1, -2), -1, 'neg `fromIndex` starts at the right index');
+
+    // assert.strictEqual(_.indexOf(array, 2, -3), 4);
+
+    // _.each([-6, -8, -Infinity], function(fromIndex) {
+    //
+    //   assert.strictEqual(_.indexOf(array, 1, fromIndex), 0);
+    // });
+
+    // assert.strictEqual(_.indexOf([1, 2, 3], 1, true), 0);
+
+  //   index = _.indexOf([], void 0, true);
+  //
+  //   assert.strictEqual(index, -1, 'empty array with truthy `isSorted` returns -1');
+  // });
 
   QUnit.test('indexOf with NaN', function(assert) {
     assert.strictEqual(_.indexOf([1, 2, NaN, NaN], NaN), 2, 'Expected [1, 2, NaN] to contain NaN');
