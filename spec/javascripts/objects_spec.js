@@ -82,6 +82,16 @@ describe("Objects", function() {
     });
   });
 
+  describe("_.values()", function () {
+      it("can extract the values from an object", function () {
+        expect(_.values({one: 1, two: 2})).toEqual([1, 2]);
+      });
+
+      it("even when one of them is length", function () {
+        expect(_.values({ one: 1, two: 2, length: 3})).toEqual([1, 2, 3]);
+      });
+  });
+  
   describe("_.isObject", function () {
     it("this arguments object is object", function () {
       expect(_.isObject(arguments)).toEqual(true);
