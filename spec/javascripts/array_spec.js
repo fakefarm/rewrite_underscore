@@ -295,6 +295,28 @@ describe('Arrays', function() {
       expect(_.range(-3)).toEqual([0, -1, -2]);
     });
   });
+
+  describe("_.without()", function () {
+    // _dw blocked - without() needs difference()
+    xit("removes all instances of the given values", function () {
+      var list = [1, 2, 1, 0, 3, 1, 4];
+      expect(_.without(list, 0,1)).toEqual([2, 3, 4]);
+    });
+  });
+
+  describe("_.difference()", function () {
+    xit("can find the difference of two arrays", function () {
+      // _dw blocked - difference() needs filter()
+      // I need filter
+      result = _.difference([1,2,3], [2, 30, 40]);
+      expect(result).toEqual([1, 3]);
+    });
+  });
+
+  describe("_.filter()", function () {
+    // _dw blocked - filter() hasn't been built yet
+  });
+
   describe("_.indexOf()", function () {
     it("can compute indexOf", function () {
       var numbers = [1,2,3];

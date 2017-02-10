@@ -31,7 +31,7 @@ describe("Objects", function() {
     });
 
     xit("is not when it's converted to an array", function () {
-      // _dw need to implement _.toArray
+      // _dw nab - needs isString()
       expect(_.isArguments(_.toArray(args))).toBe(false);
     });
 
@@ -91,7 +91,7 @@ describe("Objects", function() {
         expect(_.values({ one: 1, two: 2, length: 3})).toEqual([1, 2, 3]);
       });
   });
-  
+
   describe("_.isObject", function () {
     it("this arguments object is object", function () {
       expect(_.isObject(arguments)).toEqual(true);

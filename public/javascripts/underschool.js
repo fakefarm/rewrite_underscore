@@ -9,7 +9,7 @@ var _ = (function(){
       MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
 
 var optimizeCb = function(func, context, argCount) {
-// _dw take some time to tinker with this one!
+// _dw study
   if(context === void 0) return func;
   switch (argCount) {
     case 1: return function(value) {
@@ -31,7 +31,8 @@ var optimizeCb = function(func, context, argCount) {
 
 
 // Helper methods of some kind...
-// _dw what is a shallow property?
+// _dw question
+// what is a shallow property?
   function shallowProperty(key) {
     return function(obj) {
       return obj == null ? void 0 : obj[key];
@@ -80,7 +81,8 @@ var optimizeCb = function(func, context, argCount) {
  //- _Array functions -----------------
  //----------------------------------------------------
 
-  // _dw - seems the difference in first() & initial() is how they deal with N. With first(), use N to declare that you want 'the first N of an array'. With initial, you are using N to declare that you want all of the array execpt 'N'
+  // _dw note
+  // seems the difference in first() & initial() is how they deal with N. With first(), use N to declare that you want 'the first N of an array'. With initial, you are using N to declare that you want all of the array execpt 'N'
 
   _.first = _.head = _.take = function(array, n, guard) {
     if( array == null || array.length < 1 ) return void 0;
@@ -93,7 +95,8 @@ var optimizeCb = function(func, context, argCount) {
   };
 
   _.rest = _.tail = _.drop = function(array, n) {
-    // _dw seems that slice's api works that the second argument can either be a boolean or a number.
+    // _dw note
+    // seems that slice's api works that the second argument can either be a boolean or a number.
     // if it's a boolean (true) then it will slice the first element
     // if it's false, then it does not slice first element
     // if it's a number, then it will slice the number of elements off the front and go until the end.
@@ -102,16 +105,18 @@ var optimizeCb = function(func, context, argCount) {
   };
 
   _.last = function(array, n, guard) {
-    if (array == null || array.length < 1) return void 0; // _dw returns undefined rather than blowing up. Nice!
+    if (array == null || array.length < 1) return void 0;
+    // _dw note
+    // returns undefined rather than blowing up. Nice!
     if (n == null || guard) return array[array.length - 1];
     return _.rest(array, Math.max(0, array.length - n));
   };
 
-  // _dw coming back to compact
   _.compact = function(array) {};
 
   var flatten = function(input, shallow, strict, output) {
-    // _dw this is some meat! I need to study this function...
+    // _dw study
+
     output = output || [];
     var idx = output.length;
     for ( var i = 0, length = getLength(input); i < length; i++) {
@@ -137,7 +142,7 @@ var optimizeCb = function(func, context, argCount) {
   };
 
   _.range = function(start, stop, step) {
-    // _dw review this one.
+    // _dw study
     if (stop == null) {
       stop = start || 0;
       start = 0;
@@ -172,7 +177,7 @@ var optimizeCb = function(func, context, argCount) {
         return array[idx] === item ? idx : -1;
       }
       if (item !== item) {
-        // _dw Hitting
+        // _dw fail
         // TypeError: predicateFind is not a function when running the pending include specs. I need to dig into this one!
         idx = predicateFind(slice.call(array, i, length), _.isNaN);
         return idx >= 0 ? idx + i : -1;
@@ -281,6 +286,16 @@ var optimizeCb = function(func, context, argCount) {
     if (typeof fromIndex != 'number' || guard) fromIndex = 0;
     return _.indexOf(obj, item, fromIndex) >= 0;
   };
+
+  _.toArray = function (obj) {
+    if (!obj) return [];
+    if (_.isArray(obj)) return slice.call(obj);
+    if (_.isString(obj)) {
+      return obj.match(reStrStymbol);
+    }
+    if (isArrayLike(obj)) return _.map(obj, _.identity);
+    return _.values(obj);
+  }
 
   return _;
 }());
