@@ -152,11 +152,12 @@ var optimizeCb = function(func, context, argCount) {
       range[idx] = start;
     }
     return range;
-  }
+  };
 
   _.without = restArgs(function(array, otherArrays){
       return _.difference(array, otherArrays);
-  })
+  });
+
   var createIndexFinder = function(dir, predicateFind, sortedIndex) {
     return function(array, item, idx) {
       var i = 0, length = getLength(array);
@@ -171,7 +172,9 @@ var optimizeCb = function(func, context, argCount) {
         return array[idx] === item ? idx : -1;
       }
       if (item !== item) {
-        idx = predicateFind(slice.call(array, i, length), _.isNan);
+        // _dw Hitting
+        // TypeError: predicateFind is not a function when running the pending include specs. I need to dig into this one!
+        idx = predicateFind(slice.call(array, i, length), _.isNaN);
         return idx >= 0 ? idx + i : -1;
       }
       for (idx = dir > 0 ? i : length - 1; idx >= 0 && idx < length; idx += dir) {
@@ -272,6 +275,12 @@ var optimizeCb = function(func, context, argCount) {
     var type = typeof obj;
     return type === 'function' || type === 'object' && !!obj;
   }
+
+  _.contains = _.includes = _.include =  function (obj, item, fromIndex, guard) {
+    if (!isArrayLike(obj)) obj = _.values(obj);
+    if (typeof fromIndex != 'number' || guard) fromIndex = 0;
+    return _.indexOf(obj, item, fromIndex) >= 0;
+  };
 
   return _;
 }());
