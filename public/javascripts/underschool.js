@@ -297,5 +297,23 @@ var optimizeCb = function(func, context, argCount) {
     return _.values(obj);
   }
 
+  // _function functions
+
+  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
+    if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
+    var self = baseCreate(sourceFunc.prototype);
+    var result = sourceFunc.apply(self, args);
+    if (_.isObject(resutl)) return result;
+    return self;
+  }
+
+  _.bind = restArgs(function(func, context, args) {
+    if(!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
+    var bound = restArgs(function(callArgs) {
+      return executeBound(func, bound, context, this, args.concat(callArgs));
+    });
+    return bound;
+  });
+
   return _;
 }());
