@@ -5,6 +5,7 @@ var _ = (function(){
       pop = Array.prototype.pop,
       nativeIsArray = Array.isArray,
       nativeKeys = Object.keys,
+      nativeCreate = Object.create,
       getLength = shallowProperty('length'),
       MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
 
@@ -42,6 +43,16 @@ var optimizeCb = function(func, context, argCount) {
   function isArrayLike(collection) {
     var length = getLength(collection);
     return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+  }
+
+  var baseCreate = function (prototype) {
+    // _dw study
+    if(!_.isObject(prototype)) return {};
+    if (nativeCreate) return nativeCreate(prototype);
+    Ctor.prototype = prototype;
+    var result = new Ctor;
+    Ctor.prototype = null;
+    return result;
   }
 
   //- _function functions --------------
@@ -303,7 +314,7 @@ var optimizeCb = function(func, context, argCount) {
     if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
     var self = baseCreate(sourceFunc.prototype);
     var result = sourceFunc.apply(self, args);
-    if (_.isObject(resutl)) return result;
+    if (_.isObject(result)) return result;
     return self;
   }
 

@@ -17,49 +17,49 @@
     // bound = _(func).bind(context);
     // assert.strictEqual(bound(), 'name: moe', 'can do OO-style binding');
 
-    bound = _.bind(func, null, 'curly');
-    var result = bound();
+    // bound = _.bind(func, null, 'curly');
+    // var result = bound();
     // Work around a PhantomJS bug when applying a function with null|undefined.
 
-    assert.ok(result === 'name: curly' || result === 'name: ' + window.name, 'can bind without specifying a context');
+    // assert.ok(result === 'name: curly' || result === 'name: ' + window.name, 'can bind without specifying a context');
 
-    func = function(salutation, name) { return salutation + ': ' + name; };
-    func = _.bind(func, this, 'hello');
+    // func = function(salutation, name) { return salutation + ': ' + name; };
+    // func = _.bind(func, this, 'hello');
 
-    assert.strictEqual(func('moe'), 'hello: moe', 'the function was partially applied in advance');
+    // assert.strictEqual(func('moe'), 'hello: moe', 'the function was partially applied in advance');
 
-    func = _.bind(func, this, 'curly');
+    // func = _.bind(func, this, 'curly');
 
-    assert.strictEqual(func(), 'hello: curly', 'the function was completely applied in advance');
+    // assert.strictEqual(func(), 'hello: curly', 'the function was completely applied in advance');
 
-    func = function(salutation, firstname, lastname) { return salutation + ': ' + firstname + ' ' + lastname; };
-    func = _.bind(func, this, 'hello', 'moe', 'curly');
+    // func = function(salutation, firstname, lastname) { return salutation + ': ' + firstname + ' ' + lastname; };
+    // func = _.bind(func, this, 'hello', 'moe', 'curly');
 
-    assert.strictEqual(func(), 'hello: moe curly', 'the function was partially applied in advance and can accept multiple arguments');
+    // assert.strictEqual(func(), 'hello: moe curly', 'the function was partially applied in advance and can accept multiple arguments');
 
-    func = function() { return this; };
+    // func = function() { return this; };
 
-    assert.strictEqual(typeof _.bind(func, 0)(), 'object', 'binding a primitive to `this` returns a wrapped primitive');
+    // assert.strictEqual(typeof _.bind(func, 0)(), 'object', 'binding a primitive to `this` returns a wrapped primitive');
 
 
-    assert.strictEqual(_.bind(func, 0)().valueOf(), 0, 'can bind a function to `0`');
+    // assert.strictEqual(_.bind(func, 0)().valueOf(), 0, 'can bind a function to `0`');
 
-    assert.strictEqual(_.bind(func, '')().valueOf(), '', 'can bind a function to an empty string');
+    // assert.strictEqual(_.bind(func, '')().valueOf(), '', 'can bind a function to an empty string');
 
-    assert.strictEqual(_.bind(func, false)().valueOf(), false, 'can bind a function to `false`');
+    // assert.strictEqual(_.bind(func, false)().valueOf(), false, 'can bind a function to `false`');
 
     // These tests are only meaningful when using a browser without a native bind function
     // To test this with a modern browser, set underscore's nativeBind to undefined
-    var F = function() { return this; };
-    var boundf = _.bind(F, {hello: 'moe curly'});
-    var Boundf = boundf; // make eslint happy.
-    var newBoundf = new Boundf();
+    // var F = function() { return this; };
+    // var boundf = _.bind(F, {hello: 'moe curly'});
+    // var Boundf = boundf; // make eslint happy.
+    // var newBoundf = new Boundf();
 
-    assert.strictEqual(newBoundf.hello, void 0, 'function should not be bound to the context, to comply with ECMAScript 5');
+    // assert.strictEqual(newBoundf.hello, void 0, 'function should not be bound to the context, to comply with ECMAScript 5');
 
-    assert.strictEqual(boundf().hello, 'moe curly', "When called without the new operator, it's OK to be bound to the context");
+    // assert.strictEqual(boundf().hello, 'moe curly', "When called without the new operator, it's OK to be bound to the context");
 
-    assert.ok(newBoundf instanceof F, 'a bound instance is an instance of the original function');
+    // assert.ok(newBoundf instanceof F, 'a bound instance is an instance of the original function');
 
     assert.raises(function() { _.bind('notafunction'); }, TypeError, 'throws an error when binding to a non-function');
   });
