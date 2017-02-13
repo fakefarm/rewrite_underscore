@@ -61,15 +61,15 @@
 
     // assert.ok(newBoundf instanceof F, 'a bound instance is an instance of the original function');
 
-    assert.raises(function() { _.bind('notafunction'); }, TypeError, 'throws an error when binding to a non-function');
-  });
+    // assert.raises(function() { _.bind('notafunction'); }, TypeError, 'throws an error when binding to a non-function');
+  // });
 
-  QUnit.test('partial', function(assert) {
-    var obj = {name: 'moe'};
-    var func = function() { return this.name + ' ' + _.toArray(arguments).join(' '); };
-
-    obj.func = _.partial(func, 'a', 'b');
-    assert.strictEqual(obj.func('c', 'd'), 'moe a b c d', 'can partially apply');
+  // QUnit.test('partial', function(assert) {
+  //   var obj = {name: 'moe'};
+  //   var func = function() { return this.name + ' ' + _.toArray(arguments).join(' '); };
+  //
+  //   obj.func = _.partial(func, 'a', 'b');
+  //   assert.strictEqual(obj.func('c', 'd'), 'moe a b c d', 'can partially apply');
 
     obj.func = _.partial(func, _, 'b', _, 'd');
     assert.strictEqual(obj.func('a', 'c'), 'moe a b c d', 'can partially apply with placeholders');

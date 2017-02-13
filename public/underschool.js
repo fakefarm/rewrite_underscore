@@ -9,31 +9,37 @@ var _ = (function(){
       getLength = shallowProperty('length'),
       MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
 
-var optimizeCb = function(func, context, argCount) {
-// _dw study
-  if(context === void 0) return func;
-  switch (argCount) {
-    case 1: return function(value) {
-      return func.call(context, value);
+  var optimizeCb = function(func, context, argCount) {
+  // _dw study
+    if(context === void 0) return func;
+    switch (argCount) {
+      case 1: return function(value) {
+        return func.call(context, value);
+      };
+      // The 2-parameter case has been omitted only because no current consumers made use of it.
+      case null:
+      case 3: return function(value, index, collection) {
+        return func.call(context, value, index, collection);
+      };
+      case 4: return function(accumulator, value, index, collection) {
+        return func.call(context, accumulator, value, index, collection);
+      };
+    }
+    return function() {
+      return func.apply(context, arguments);
     };
-    // The 2-parameter case has been omitted only because no current consumers made use of it.
-    case null:
-    case 3: return function(value, index, collection) {
-      return func.call(context, value, index, collection);
-    };
-    case 4: return function(accumulator, value, index, collection) {
-      return func.call(context, accumulator, value, index, collection);
-    };
-  }
-  return function() {
-    return func.apply(context, arguments);
   };
-};
 
-
-// Helper methods of some kind...
-// _dw question
-// what is a shallow property?
+  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
+    if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
+    var self = baseCreate(sourceFunc.prototype);
+    var result = sourceFunc.apply(self, args);
+    if (_.isObject(result)) return result;
+    return self;
+  }
+  
+  // _dw question
+  // what is a shallow property?
   function shallowProperty(key) {
     return function(obj) {
       return obj == null ? void 0 : obj[key];
@@ -54,9 +60,6 @@ var optimizeCb = function(func, context, argCount) {
     Ctor.prototype = null;
     return result;
   }
-
-  //- _function functions --------------
-  //----------------------------------------------------
 
   var restArgs = function(func, startIndex) {
     startIndex = startIndex == null ? func.length - 1 : +startIndex;
@@ -81,16 +84,22 @@ var optimizeCb = function(func, context, argCount) {
     };
   };
 
+  // An internal function to generate callbacks that can be applied to each element in a collection, returning the desired result - either `identity`, an arbitrary callback, a property matcher, or a property accessor
+
+  var cb = function(value, context, argCount) {
+    if(_.iteratee !== builtinIteratee) return _.iteratee(value, context);
+    if (value == null) return _.identity;
+    if (_.isFunction(value)) return optimizeCb(value, context, argCount);
+    if (_.isObject(value) && !_.isArray(value)) return _.matcher(value);
+    // _dw how was map able to work before using this?
+    return _.property(value);
+  }
   _.difference = restArgs(function(array, rest){
     rest = flatten(rest, true, true);
     return _.filter(array, function(value) {
       return !_.contains(rest, value);
     });
   });
-
-
- //- _Array functions -----------------
- //----------------------------------------------------
 
   // _dw note
   // seems the difference in first() & initial() is how they deal with N. With first(), use N to declare that you want 'the first N of an array'. With initial, you are using N to declare that you want all of the array execpt 'N'
@@ -202,10 +211,6 @@ var optimizeCb = function(func, context, argCount) {
 
   _.indexOf = createIndexFinder(1, _.findIndex, _.sortedIndex);
 
-
-  //- _Object functions ----------------
-  //----------------------------------------------------
-
   _.isArray = nativeIsArray || function(obj) {
     return toString.call(obj) === '[object Array]';
   };
@@ -230,27 +235,12 @@ var optimizeCb = function(func, context, argCount) {
     return values;
   };
 
-  //- _Collection functions ----------------------------
-  //----------------------------------------------------
-
-  var builtinIteratee;
-
-  // An internal function to generate callbacks that can be applied to each element in a collection, returning the desired result - either `identity`, an arbitrary callback, a property matcher, or a property accessor
-  var cb = function(value, context, argCount) {
-    if(_.iteratee !== builtinIteratee) return _.iteratee(value, context);
-    if (value == null) return _.identity;
-    if (_.isFunction(value)) return optimizeCb(value, context, argCount);
-    if (_.isObject(value) && !_.isArray(value)) return _.matcher(value);
-    return _.property(value);
-  }
-
   // External wrapper for our callback generator. Users may customize `_.iteratee` if they want additional predicate/iteratee shorthand styles. This abstraction hides the internal-only argCount argument.
 
   _.iteratee = builtinIteratee = function(value, context) {
     return cb(value, context, Infinity);
   }
 
-  // _filter
   _.filter = function(obj, predicate, context) {
     var results = [];
     predicate = cb(predicate, context);
@@ -308,15 +298,13 @@ var optimizeCb = function(func, context, argCount) {
     return _.values(obj);
   }
 
-  // _function functions
+  // Add some isType methods: isAgruments, isFunction, isString, isNumber, isDate, isRegExp, isError, isMap, isWeakMap, isSet, isWeakSet.
 
-  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
-    if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
-    var self = baseCreate(sourceFunc.prototype);
-    var result = sourceFunc.apply(self, args);
-    if (_.isObject(result)) return result;
-    return self;
-  }
+  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error', 'Symbol', 'Map', 'WeakMap', 'Set', 'WeakSet'], function (name) {
+    _['is' + name] = function (obj) {
+      return toString.call(obj) === '[object ' + name + ']';
+    };
+  });
 
   _.bind = restArgs(function(func, context, args) {
     if(!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
@@ -325,6 +313,24 @@ var optimizeCb = function(func, context, argCount) {
     });
     return bound;
   });
+
+  // Partially apply a function by creating a version that has had some of its arguments pre-filled, without changing its dynamic 'this' context. _ acts as a placeholder by default, allowing any combination of argumennts to be pre-filled. Set _.partial.placeholder for a custom placeholder argument
+
+  _.partial = restArgs(function (func, boundArgs) {
+    var placeholder = _.partial.placeholder;
+    var bound = function () {
+      var position = 0, length = boundArgs.length;
+      var args = Array(length);
+      for (var i = 0; i <  length; i++) {
+        // _dw study
+        args[i] = boundArgs[i] === placeholder ? arguments[position++] : boundArgs[i]
+      }
+      while (position < arguments.length)
+      args.push(arguments[position++]);
+      return executeBound(func, bound, this, this, args);
+    };
+    return bound;
+  })
 
   return _;
 }());

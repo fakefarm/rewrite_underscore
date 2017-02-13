@@ -16,7 +16,6 @@ describe("Collections", function () {
         expect(num).toEqual(i + 1);
       });
     });
-
     it("context object property access", function () {
       var answers = [];
       _.each([1, 2, 3],
@@ -27,7 +26,6 @@ describe("Collections", function () {
       );
       expect(answers).toEqual([5, 10, 15]);
     });
-
     it("can iterate a simple array", function () {
       answers = [];
       _.each([1,2,3],
@@ -36,7 +34,6 @@ describe("Collections", function () {
       })
       expect(answers).toEqual([1,2,3]);
     });
-
     it("iterating over objects works, and ignores the object prototype", function () {
       answers = [];
       var obj = {one: 1, two: 2, three: 3};
@@ -45,7 +42,6 @@ describe("Collections", function () {
       expect(answers).toEqual(['one', 'two', 'three']);
       delete obj.constructor.prototype.four;
     });
-
     xit('the fun should be called only 3 times', function(){
       // _dw nab - test needs times()
       _(1000).times(function(){ _.each([], function(){})})
@@ -54,33 +50,28 @@ describe("Collections", function () {
       _.each(obj, function(){ count++; });
       expect(count).toEqual(3);
     });
-
     it("can reference the original collection from inside the iterator", function () {
       var answer = null;
       _.each([1,2,3], function(num, index, arr){
         if(_.include(arr, num)) answer = true });
       expect(answer).toBe(true);
     });
-
     it("handles a null property", function () {
       answers = 0;
       _.each(null, function(){ ++answers });
       expect(answers).toEqual(0);
     });
-
     it("these are equal", function () {
       var a = [1, 2, 3];
       expect(_.each(a, function(){})).toEqual(a);
       expect(_.each(false, function(){})).toEqual(false);
       expect(_.each(null, function(){})).toEqual(null);
     });
-
     describe("Aliases", function () {
       it("_.forEach()", function(){
         expect(_.forEach).toEqual(_.each);
       })
     });
-
   });
   describe("_.includes", function () {
     it("does not include contents from hasOwnProperty", function () {

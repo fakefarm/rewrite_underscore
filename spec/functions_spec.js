@@ -93,4 +93,20 @@ describe("Functions", function () {
       expect(function () { _.bind('notafunction') }).toThrow(TypeError);
     });
   });
+
+  describe("_.partial()", function () {
+    var obj = {name: 'moe'};
+    var func = function () { return this.name + ' ' +
+    _.toArray(arguments).join(' '); };
+    obj.func = _.partial(func, 'a', 'b');
+
+    xit("can partially apply", function () {
+      expect(obj.func('c', 'd')).toEqual('moe a b c d');
+    });
+
+    xit("can partially apply with placeholders", function () {
+      obj.func = _.partial(func, _, 'b', _, 'd');
+      expect(obj.func('a', 'c')).toEqual('moe a b c d');
+    });
+  });
 });
