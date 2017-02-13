@@ -158,4 +158,39 @@ describe("Collections", function () {
       expect(_.isArray(_.toArray(arguments))).toBe(true);
     });
   });
+  describe("_.map", function () {
+    it("doubled numbers", function () {
+      var doubled = _.map([1, 2, 3], function (num) {
+        return num * 2 });
+        expect(doubled).toEqual([2, 4, 6]);
+    });
+    it("tripled numbers with context", function () {
+      var tripled = _.map([1,2,3], function (num) {
+      return num * this.multiplier; }, { multiplier: 3});
+      expect(tripled).toEqual([3,6,9]);
+    });
+    xit("OO-style doubled numbers", function () {
+      // _dw OO
+      doubled = _([1, 2, 3]).map(function (num) {
+        return num * 2; });
+        expect(doubled).toEqual([2, 4, 5]);
+    });
+    it("can use collection methods on Array-likes", function () {
+      var ids = _.map({length: 2, 0: {id: '1'}, 1: {id: '2'}},
+                        function (n) {
+                          return n.id;
+                        });
+      expect(ids).toEqual(['1', '2']);
+    });
+    it("handles a null properly", function () {
+      expect(_.map(null, _.noop)).toEqual([]);
+    });
+    it("called with context", function () {
+      expect(_.map([1], function () { return this.length; }, [5])).toEqual([1]);
+    });
+    it("predicate string map to object properties", function () {
+      var people = [{ name: 'moe', age: 30 }, {name: 'curly', age: 50}];
+      expect(_.map(people, 'name')).toEqual(['moe', 'curly']);
+    });
+  });
 });

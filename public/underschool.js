@@ -266,8 +266,17 @@ var _ = (function(){
     return obj;
   };
 
-  // _keys
-  // Retrieve the names of an object's own properties. Delegates to ES5's native Object.keys
+  _.map = function (obj, iteratee, context) {
+    iteratee = cb(iteratee, context);
+    var keys = !isArrayLike(obj) && _.keys(obj),
+        length = (keys || obj).length,
+        results = Array(length);
+    for (var index = 0; index < length; index++) {
+      var currentKey = keys ? keys[index] : index;
+      results[index] = iteratee(obj[currentKey], currentKey, obj);
+    }
+    return results;
+  };
 
   _.keys = function(obj) {
     if (!_.isObject(obj)) return [];
