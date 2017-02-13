@@ -20,7 +20,7 @@
     // assert.deepEqual(_.keys(1), []);
     //
     // assert.deepEqual(_.keys('a'), []);
-    // 
+    //
     // assert.deepEqual(_.keys(true), []);
 
     // keys that may be missed if the implementation isn't careful
@@ -657,16 +657,16 @@
     // assert.ok(_.isArray([1, 2, 3]), 'but arrays are');
   // });
 
-  QUnit.test('isString', function(assert) {
-    var obj = new String('I am a string object');
-    if (testElement) {
-      assert.notOk(_.isString(testElement), 'an element is not a string');
-    }
-    assert.ok(_.isString([1, 2, 3].join(', ')), 'but strings are');
-    assert.strictEqual(_.isString('I am a string literal'), true, 'string literals are');
-    assert.ok(_.isString(obj), 'so are String objects');
-    assert.strictEqual(_.isString(1), false);
-  });
+  // QUnit.test('isString', function(assert) {
+  //   var obj = new String('I am a string object');
+  //   if (testElement) {
+  //     assert.notOk(_.isString(testElement), 'an element is not a string');
+  //   }
+    // assert.ok(_.isString([1, 2, 3].join(', ')), 'but strings are');
+    // assert.strictEqual(_.isString('I am a string literal'), true, 'string literals are');
+    // assert.ok(_.isString(obj), 'so are String objects');
+  //   assert.strictEqual(_.isString(1), false);
+  // });
 
   QUnit.test('isSymbol', function(assert) {
     assert.notOk(_.isSymbol(0), 'numbers are not symbols');

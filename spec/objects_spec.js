@@ -1,5 +1,4 @@
 describe("Objects", function() {
-
   describe("_.isArray()", function(){
 
     it('undefined vars are not arrays', function() {
@@ -14,7 +13,6 @@ describe("Objects", function() {
       expect(_.isArray([1, 2, 3])).toBe(true);
     });
   });
-
   describe("_.isArguments()", function () {
     var args = (function(){ return arguments; }(1, 2, 3));
 
@@ -39,7 +37,6 @@ describe("Objects", function() {
       expect(_.isArguments([1, 2, 3])).toBe(false);
     });
   });
-
   describe("_.isFunction()", function () {
     it("undefined vars are not functions", function () {
       expect(_.isFunction(void 0)).toBe(false);
@@ -61,7 +58,6 @@ describe("Objects", function() {
       expect(_.isFunction(function(){})).toBe(true);
     });
   });
-
   describe("_.keys", function () {
     it("can extract the keys from an object", function () {
       expect(_.keys({one: 1, two: 2})).toEqual(['one', 'two']);
@@ -81,7 +77,6 @@ describe("Objects", function() {
       expect(_.keys(true)).toEqual([]);
     });
   });
-
   describe("_.values()", function () {
       it("can extract the values from an object", function () {
         expect(_.values({one: 1, two: 2})).toEqual([1, 2]);
@@ -91,7 +86,6 @@ describe("Objects", function() {
         expect(_.values({ one: 1, two: 2, length: 3})).toEqual([1, 2, 3]);
       });
   });
-
   describe("_.isObject", function () {
     it("this arguments object is object", function () {
       expect(_.isObject(arguments)).toEqual(true);
@@ -127,6 +121,30 @@ describe("Objects", function() {
 
     it("but new String()", function () {
       expect(_.isObject(new String('string'))).toEqual(true);
+    });
+  });
+  describe("isString", function () {
+    xit("an element is not a string", function () {
+      if (testElement) {
+        // _dw fail
+        expect(_.isString(testElement)).not.toBe(defined);
+      }
+    });
+
+    it("but strings are", function () {
+      expect(_.isString([1, 2, 3].join(', '))).toBe(true);
+    });
+
+    it("I am a string literal", function () {
+      expect(_.isString('I am a string literal')).toBe(true);
+    });
+
+    it("so are string objects", function () {
+      var obj = new String('I am a string object');
+      expect(_.isString(obj))toBe(true);
+    });
+    it("integers are not strings", function () {
+      expect(_.isString(1)).toBe(false);
     });
   });
 });
