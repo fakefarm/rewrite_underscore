@@ -192,5 +192,9 @@ describe("Collections", function () {
       var people = [{ name: 'moe', age: 30 }, {name: 'curly', age: 50}];
       expect(_.map(people, 'name')).toEqual(['moe', 'curly']);
     });
+    it("predicate string map to object properties", function () {
+      var people = [{ name: 'moe', age: 30}, {name: 'curly', age: 50}];
+      expect(_.map(people, 'name')).toEqual(['moe', 'curly']);
+    });
   });
 });

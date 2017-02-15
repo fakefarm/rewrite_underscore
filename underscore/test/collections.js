@@ -165,10 +165,10 @@
     //   return this.length;
     // }, [5]), [1], 'called with context');
 
-    // Passing a property name like _.pluck.
-    var people = [{name: 'moe', age: 30}, {name: 'curly', age: 50}];
-    assert.deepEqual(_.map(people, 'name'), ['moe', 'curly'], 'predicate string map to object properties');
-  });
+  //   // Passing a property name like _.pluck.
+  //   var people = [{name: 'moe', age: 30}, {name: 'curly', age: 50}];
+  //   assert.deepEqual(_.map(people, 'name'), ['moe', 'curly'], 'predicate string map to object properties');
+  // });
 
   QUnit.test('collect', function(assert) {
     assert.strictEqual(_.collect, _.map, 'is an alias for map');
