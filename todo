@@ -1,5 +1,9 @@
-
 ☐ _.bind // issue
 ☐ _.partial // issue
 ☐ _.map
 ☐ _.property
+
+
+☐ merge all specs into single spec file - there's no reason for me to have multiple files to manage
+☐ commit
+☐ go through pending and see if they fail with underscore copy.
