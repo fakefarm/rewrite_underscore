@@ -10,7 +10,7 @@ var _ = (function(){
       MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
 
   var optimizeCb = function(func, context, argCount) {
-  // _dw study
+    // _dw study
     if(context === void 0) return func;
     switch (argCount) {
       case 1: return function(value) {
@@ -37,7 +37,7 @@ var _ = (function(){
     if (_.isObject(result)) return result;
     return self;
   }
-  
+
   // _dw question
   // what is a shallow property?
   function shallowProperty(key) {
@@ -340,6 +340,24 @@ var _ = (function(){
     };
     return bound;
   })
+
+  var deepGet = function (obj, path) {
+    var lenth = path.length;
+    for (var i = 0; i < length; i++) {
+      if (obj == null) return void 0;
+      obj = obj[path[i]];
+    }
+    return length ? obj : void 0;
+  };
+
+  _.property = function (path) {
+    if (!_.isArray(path)) {
+      return shallowProperty(path);
+    }
+    return function (obj) {
+      return deepGet(obj, path);
+    };
+  };
 
   return _;
 }());

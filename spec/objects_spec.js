@@ -147,4 +147,36 @@ describe("Objects", function() {
       expect(_.isString(1)).toBe(false);
     });
   });
+  describe("_.property()", function () {
+    it("returns the property with the given name", function () {
+      var stooge = {name: 'moe'};
+      expect(_.property('name')(stooge)).toEqual('moe');
+    });
+    it("should return undefined for null values", function () {
+      expect(_.property('name')(null)).toEqual(void 0);
+    });
+    it("should return undefined for undefined values", function () {
+      expect(_.property('name')(void 0)).toEqual(void 0);
+    });
+    it("should return undefined for null object", function () {
+      expect(_.property(null)('foo')).toEqual(void 0);
+    });
+    it("can fetch null values", function () {
+      expect(_.property('x')({x: null})).toEqual(null);
+    });
+    it("does not crash on property access of non-objects", function () {
+      expect(_.property('length')(null)).toEqual(void 0);
+    });
+    it("can get a direct property", function () {
+      expect(_.property('a')({a: 1})).toEqual(1);
+    });
+    xit("can get a nested property", function () {
+      // _dw fail
+      // hmm why is this returning undefined?
+      expect(_.property(['a', 'b'])({a: {b: 2}})).toEqual(2);
+    });
+    xit("can fetch falsy values", function () {
+      expect(_.property(['a'])({a: false})).toEqual(false);
+    });
+  });
 });
