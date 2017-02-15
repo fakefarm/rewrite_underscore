@@ -10,7 +10,10 @@ body { overflow-y: scroll; }
 .jasmine_html-reporter .jasmine-banner .jasmine-version { margin-left: 14px; position: relative; top: 6px; }
 .jasmine_html-reporter #jasmine_content { position: fixed; right: 100%; }
 .jasmine_html-reporter .jasmine-version { color: #aaa; }
-.jasmine_html-reporter .jasmine-banner { margin-top: 14px; }
+.jasmine_html-reporter .jasmine-banner {
+  margin-top: 14px;
+  display: none;
+}
 .jasmine_html-reporter .jasmine-duration { color: #fff; float: right; line-height: 28px; padding-right: 9px; }
 .jasmine_html-reporter .jasmine-symbol-summary { overflow: hidden; *zoom: 1; margin: 14px 0; }
 .jasmine_html-reporter .jasmine-symbol-summary li { display: inline-block; height: 10px; width: 14px; font-size: 16px; }
@@ -56,3 +59,26 @@ body { overflow-y: scroll; }
 .jasmine_html-reporter .jasmine-result-message { padding-top: 14px; color: #333; white-space: pre; }
 .jasmine_html-reporter .jasmine-result-message span.jasmine-result { display: block; }
 .jasmine_html-reporter .jasmine-stack-trace { margin: 5px 0 0 0; max-height: 224px; overflow: auto; line-height: 18px; color: #666; border: 1px solid #ddd; background: white; white-space: pre; }
+
+/* _dw custom jasmine */
+
+.jasmine-symbol-summary, .jasmine-alert {
+  display: none;
+}
+
+.jasmine-description, .jasmine-result-message {
+  font-size: 30px;
+  padding: 30px;
+}
+
+.jasmine-description {
+  background-color: #eee !important;
+}
+
+a {
+  color: #666 !important;
+}
+
+.jasmine-result-message {
+  color: red !important;
+}
