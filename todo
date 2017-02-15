@@ -4,6 +4,6 @@
 ☐ _.property
 
 
-☐ merge all specs into single spec file - there's no reason for me to have multiple files to manage
-☐ commit
+✔ merge all specs into single spec file - there's no reason for me to have multiple files to manage @done(2017-02-15 08:37)
+✔ commit @done(2017-02-15 08:37)
 ☐ go through pending and see if they fail with underscore copy.
