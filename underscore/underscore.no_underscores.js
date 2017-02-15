@@ -1,55 +1,41 @@
-//     Underscore.js 1.8.3
-//     http://underscorejs.org
-//     (c) 2009-2017 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-//     Underscore may be freely distributed under the MIT license.
 
 (function() {
 
-  // Baseline setup
-  // --------------
-
-  // Establish the root object, `window` (`self`) in the browser, `global`
-  // on the server, or `this` in some virtual machines. We use `self`
-  // instead of `window` for `WebWorker` support.
+// 1.
   var root = typeof self == 'object' && self.self === self && self ||
             typeof global == 'object' && global.global === global && global ||
             this ||
             {};
 
-  // Save the previous value of the `_` variable.
+// 2.
   var previousUnderscore = root._;
 
-  // Save bytes in the minified (but not gzipped) version:
+// 3.
   var ArrayProto = Array.prototype, ObjProto = Object.prototype;
   var SymbolProto = typeof Symbol !== 'undefined' ? Symbol.prototype : null;
 
-  // Create quick reference variables for speed access to core prototypes.
+// 4.
   var push = ArrayProto.push,
       slice = ArrayProto.slice,
       toString = ObjProto.toString,
       hasOwnProperty = ObjProto.hasOwnProperty;
 
-  // All **ECMAScript 5** native function implementations that we hope to use
-  // are declared here.
+// 5.
   var nativeIsArray = Array.isArray,
       nativeKeys = Object.keys,
       nativeCreate = Object.create;
 
-  // Naked function reference for surrogate-prototype-swapping.
+// 6.
   var Ctor = function(){};
 
-  // Create a safe reference to the Underscore object for use below.
+// 7.
   var _ = function(obj) {
     if (obj instanceof _) return obj;
     if (!(this instanceof _)) return new _(obj);
     this._wrapped = obj;
   };
 
-  // Export the Underscore object for **Node.js**, with
-  // backwards-compatibility for their old module API. If we're in
-  // the browser, add `_` as a global object.
-  // (`nodeType` is checked to ensure that `module`
-  // and `exports` are not HTML elements.)
+// 8.
   if (typeof exports != 'undefined' && !exports.nodeType) {
     if (typeof module != 'undefined' && !module.nodeType && module.exports) {
       exports = module.exports = _;
@@ -59,8 +45,10 @@
     root._ = _;
   }
 
+// 9.
   _.VERSION = '1.8.3';
 
+// 10.
   var optimizeCb = function(func, context, argCount) {
     if (context === void 0) return func;
     switch (argCount) {
@@ -80,8 +68,10 @@
     };
   };
 
+// 11.
   var builtinIteratee;
 
+// 12.
   var cb = function(value, context, argCount) {
     if (_.iteratee !== builtinIteratee) return _.iteratee(value, context);
     if (value == null) return _.identity;
@@ -90,6 +80,7 @@
     return _.property(value);
   };
 
+// 13.
   var restArgs = function(func, startIndex) {
     startIndex = startIndex == null ? func.length - 1 : +startIndex;
     return function() {
@@ -113,6 +104,7 @@
     };
   };
 
+// 14.
   var baseCreate = function(prototype) {
     if (!_.isObject(prototype)) return {};
     if (nativeCreate) return nativeCreate(prototype);
@@ -122,12 +114,14 @@
     return result;
   };
 
+// 15.
   var shallowProperty = function(key) {
     return function(obj) {
       return obj == null ? void 0 : obj[key];
     };
   };
 
+// 16.
   var deepGet = function(obj, path) {
     var length = path.length;
     for (var i = 0; i < length; i++) {
@@ -137,6 +131,7 @@
     return length ? obj : void 0;
   };
 
+// 17.
   var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
   var getLength = shallowProperty('length');
   var isArrayLike = function(collection) {
@@ -144,6 +139,7 @@
     return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
   };
 
+// 18.
   var createReduce = function(dir) {
     var reducer = function(obj, iteratee, memo, initial) {
       var keys = !isArrayLike(obj) && _.keys(obj),
@@ -173,7 +169,7 @@
     return results;
   };
 
-  // An internal function used for aggregate "group by" operations.
+// 19.
   var group = function(behavior, partition) {
     return function(obj, iteratee, context) {
       var result = partition ? [[], []] : {};
@@ -186,15 +182,16 @@
     };
   };
 
+// 20
   var reStrSymbol = /[^\ud800-\udfff]|[\ud800-\udbff][\udc00-\udfff]|[\ud800-\udfff]/g;
 
+// 21
   var flatten = function(input, shallow, strict, output) {
     output = output || [];
     var idx = output.length;
     for (var i = 0, length = getLength(input); i < length; i++) {
       var value = input[i];
       if (isArrayLike(value) && (_.isArray(value) || _.isArguments(value))) {
-        // Flatten current level of array or arguments object.
         if (shallow) {
           var j = 0, len = value.length;
           while (j < len) output[idx++] = value[j++];
@@ -210,12 +207,14 @@
   };
 
 
-
+// 22
     if (!_.isBoolean(isSorted)) {
       context = iteratee;
       iteratee = isSorted;
       isSorted = false;
     }
+
+// 23
     if (iteratee != null) iteratee = cb(iteratee, context);
     var result = [];
     var seen = [];
@@ -237,7 +236,7 @@
     return result;
   };
 
-  // Generator function to create the findIndex and findLastIndex functions.
+// 24
   var createPredicateIndexFinder = function(dir) {
     return function(array, predicate, context) {
       predicate = cb(predicate, context);
@@ -250,17 +249,8 @@
     };
   };
 
-  _.sortedIndex = function(array, obj, iteratee, context) {
-    iteratee = cb(iteratee, context, 1);
-    var value = iteratee(obj);
-    var low = 0, high = getLength(array);
-    while (low < high) {
-      var mid = Math.floor((low + high) / 2);
-      if (iteratee(array[mid]) < value) low = mid + 1; else high = mid;
-    }
-    return low;
-  };
 
+// 25
   var createIndexFinder = function(dir, predicateFind, sortedIndex) {
     return function(array, item, idx) {
       var i = 0, length = getLength(array);
@@ -285,6 +275,7 @@
     };
   };
 
+// 26
   var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
     if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
     var self = baseCreate(sourceFunc.prototype);
@@ -293,16 +284,18 @@
     return self;
   };
 
+// 27
   var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
   var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
                       'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
 
+// 28
   var collectNonEnumProps = function(obj, keys) {
     var nonEnumIdx = nonEnumerableProps.length;
     var constructor = obj.constructor;
     var proto = _.isFunction(constructor) && constructor.prototype || ObjProto;
 
-    // Constructor is a special case.
+// Constructor is a special case.
     var prop = 'constructor';
     if (_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
 
@@ -314,6 +307,7 @@
     }
   };
 
+// 29
   var createAssigner = function(keysFunc, defaults) {
     return function(obj) {
       var length = arguments.length;
@@ -332,6 +326,7 @@
     };
   };
 
+// 30
   var eq, deepEq;
   eq = function(a, b, aStack, bStack) {
     if (a === b) return a !== 0 || 1 / a === 1 / b;
@@ -342,6 +337,7 @@
     return deepEq(a, b, aStack, bStack);
   };
 
+// 31
   deepEq = function(a, b, aStack, bStack) {
     if (a instanceof _) a = a._wrapped;
     if (b instanceof _) b = b._wrapped;
@@ -403,16 +399,20 @@
     return true;
   };
 
+// 32
   _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error', 'Symbol', 'Map', 'WeakMap', 'Set', 'WeakSet'], function(name) {
   });
 
+// 33
   if (!_.isArguments(arguments)) {
   }
 
+// 34
   var nodelist = root.document && root.document.childNodes;
   if (typeof /./ != 'function' && typeof Int8Array != 'object' && typeof nodelist != 'function') {
   }
 
+// 35
   var escapeMap = {
     '&': '&amp;',
     '<': '&lt;',
@@ -423,6 +423,7 @@
   };
   var unescapeMap = _.invert(escapeMap);
 
+// 36
   var createEscaper = function(map) {
     var escaper = function(match) {
       return map[match];
@@ -438,16 +439,20 @@
   _.escape = createEscaper(escapeMap);
   _.unescape = createEscaper(unescapeMap);
 
+// 37
   var idCounter = 0;
 
+// 38
   _.templateSettings = {
     evaluate: /<%([\s\S]+?)%>/g,
     interpolate: /<%=([\s\S]+?)%>/g,
     escape: /<%-([\s\S]+?)%>/g
   };
 
+// 39
   var noMatch = /(.)^/;
 
+// 40
   var escapes = {
     "'": "'",
     '\\': '\\',
@@ -457,12 +462,15 @@
     '\u2029': 'u2029'
   };
 
+// 41
   var escapeRegExp = /\\|'|\r|\n|\u2028|\u2029/g;
 
+// 42
   var escapeChar = function(match) {
     return '\\' + escapes[match];
   };
 
+// 43
   var chainResult = function(instance, obj) {
     return instance._chain ? _(obj).chain() : obj;
   };
@@ -473,18 +481,23 @@
     return _;
   };
 
+// 44
   _.mixin(_);
 
+// 45
   _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
     var method = ArrayProto[name];
   });
 
+// 46
   _.each(['concat', 'join', 'slice'], function(name) {
     var method = ArrayProto[name];
   });
 
+// 47
   _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
 
+// 48
   if (typeof define == 'function' && define.amd) {
     define('underscore', [], function() {
       return _;
