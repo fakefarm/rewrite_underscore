@@ -1,6 +1,6 @@
+// 1.
 /*
 In the spirit of studying underscore, I'm taking a break from copying specs and simply reading the sourc code. It's another way to get comfortable with the many parts of this library.
-
 */
 
 // # JS Assignment
@@ -54,3 +54,19 @@ var root = typeof self == 'object' && self.self === self && self
 || typeof global == 'object' && global.global === global && global
 || this
 || {};
+
+
+
+// 8.
+  if (typeof exports != 'undefined' && !exports.nodeType) {
+    if (typeof module != 'undefined' && !module.nodeType && module.exports) {
+      exports = module.exports = _;
+    }
+    exports._ = _;
+  } else {
+    root._ = _;
+  }
+
+  // based on the environment, this will attached '_' with the proper environment.
+
+  
