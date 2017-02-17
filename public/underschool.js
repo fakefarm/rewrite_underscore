@@ -1,5 +1,4 @@
 var _ = (function(){
-  function _() {};
 
   var slice = Array.prototype.slice,
       pop = Array.prototype.pop,
@@ -8,6 +7,12 @@ var _ = (function(){
       nativeCreate = Object.create,
       getLength = shallowProperty('length'),
       MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+
+  var _ = function (obj) {
+    if (obj instanceof _) return obj;
+    if (!(this instanceof _)) return new _(obj);
+    this._wrapped = obj;
+  }
 
   var optimizeCb = function(func, context, argCount) {
     // _dw study
