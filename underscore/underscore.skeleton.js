@@ -252,6 +252,12 @@
   };
 
   _.rest = _.tail = _.drop = function(array, n, guard) {
+    // _dw note
+    // seems that slice's api works that the second argument can either be a boolean or a number.
+    // if it's a boolean (true) then it will slice the first element
+    // if it's false, then it does not slice first element
+    // if it's a number, then it will slice the number of elements off the front and go until the end.
+
     return slice.call(array, n == null || guard ? 1 : n);
   };
 
