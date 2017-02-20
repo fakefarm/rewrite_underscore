@@ -3,52 +3,21 @@
   QUnit.module('Objects');
 
   var testElement = typeof document === 'object' ? document.createElement('div') : void 0;
-  QUnit.test('keys', function(assert) {
 
-    // assert.deepEqual(_.keys({one: 1, two: 2}), ['one', 'two'], 'can extract the keys from an object');
-    // the test above is not safe because it relies on for-in enumeration order
-    // var a = []; a[1] = 0;
-
-    // assert.deepEqual(_.keys(a), ['1'], 'is not fooled by sparse arrays; see issue #95');
-
-    // assert.deepEqual(_.keys(null), []);
-    //
-    // assert.deepEqual(_.keys(void 0), []);
-    //
-    // assert.deepEqual(_.keys(1), []);
-    //
-    // assert.deepEqual(_.keys('a'), []);
-    //
-    // assert.deepEqual(_.keys(true), []);
-
-    // keys that may be missed if the implementation isn't careful
-    var trouble = {
-      constructor: Object,
-      valueOf: _.noop,
-      hasOwnProperty: null,
-      toString: 5,
-      toLocaleString: void 0,
-      propertyIsEnumerable: /a/,
-      isPrototypeOf: this,
-      __defineGetter__: Boolean,
-      __defineSetter__: {},
-      __lookupSetter__: false,
-      __lookupGetter__: []
-    };
-    var troubleKeys = ['constructor', 'valueOf', 'hasOwnProperty', 'toString', 'toLocaleString', 'propertyIsEnumerable',
-                  'isPrototypeOf', '__defineGetter__', '__defineSetter__', '__lookupSetter__', '__lookupGetter__'].sort();
-    assert.deepEqual(_.keys(trouble).sort(), troubleKeys, 'matches non-enumerable properties');
-  });
   QUnit.test('allKeys', function(assert) {
+
     assert.deepEqual(_.allKeys({one: 1, two: 2}), ['one', 'two'], 'can extract the allKeys from an object');
     // the test above is not safe because it relies on for-in enumeration order
     var a = []; a[1] = 0;
+
     assert.deepEqual(_.allKeys(a), ['1'], 'is not fooled by sparse arrays; see issue #95');
 
     a.a = a;
+
     assert.deepEqual(_.allKeys(a), ['1', 'a'], 'is not fooled by sparse arrays with additional properties');
 
     _.each([null, void 0, 1, 'a', true, NaN, {}, [], new Number(5), new Date(0)], function(val) {
+
       assert.deepEqual(_.allKeys(val), []);
     });
 
@@ -64,16 +33,19 @@
     };
     var troubleKeys = ['constructor', 'valueOf', 'hasOwnProperty', 'toString', 'toLocaleString', 'propertyIsEnumerable',
                   'isPrototypeOf'].sort();
+
     assert.deepEqual(_.allKeys(trouble).sort(), troubleKeys, 'matches non-enumerable properties');
 
     function A() {}
     A.prototype.foo = 'foo';
     var b = new A();
     b.bar = 'bar';
+
     assert.deepEqual(_.allKeys(b).sort(), ['bar', 'foo'], 'should include inherited keys');
 
     function y() {}
     y.x = 'z';
+
     assert.deepEqual(_.allKeys(y), ['x'], 'should get keys from constructor');
   });
   QUnit.test('values', function(assert) {
@@ -594,57 +566,18 @@
       assert.ok(_.isElement(testElement), 'an element is a DOM element');
     });
   }
-  // QUnit.test('isArguments', function(assert) {
 
-    // var args = (function(){ return arguments; }(1, 2, 3));
-
-    // assert.notOk(_.isArguments('string'), 'a string is not an arguments object');
-
-    // assert.notOk(_.isArguments(_.isArguments), 'a function is not an arguments object');
-
-    // assert.ok(_.isArguments(args), 'but the arguments object is an arguments object');
-
-    // assert.notOk(_.isArguments(_.toArray(args)), 'but not when it\'s converted into an array');
 
     assert.notOk(_.isArguments([1, 2, 3]), 'and not vanilla arrays.');
-  // });
-  // QUnit.test('isObject', function(assert) {
-  //   assert.ok(_.isObject(arguments), 'the arguments object is object');
-    // assert.ok(_.isObject([1, 2, 3]), 'and arrays');
 
     if (testElement) {
       assert.ok(_.isObject(testElement), 'and DOM element');
     }
 
-    // assert.ok(_.isObject(function() {}), 'and functions');
-    // assert.notOk(_.isObject(null), 'but not null');
-    // assert.notOk(_.isObject(void 0), 'and not undefined');
-
-    // assert.notOk(_.isObject('string'), 'and not string');
-
-    // assert.notOk(_.isObject(12), 'and not number');
-
     assert.notOk(_.isObject(true), 'and not boolean');
     assert.ok(_.isObject(new String('string')), 'but new String()');
   });
-  // QUnit.test('isArray', function(assert) {
 
-    // assert.notOk(_.isArray(void 0), 'undefined vars are not arrays');
-
-    // assert.notOk(_.isArray(arguments), 'the arguments object is not an array');
-
-    // assert.ok(_.isArray([1, 2, 3]), 'but arrays are');
-  // });
-  // QUnit.test('isString', function(assert) {
-  //   var obj = new String('I am a string object');
-  //   if (testElement) {
-  //     assert.notOk(_.isString(testElement), 'an element is not a string');
-  //   }
-    // assert.ok(_.isString([1, 2, 3].join(', ')), 'but strings are');
-    // assert.strictEqual(_.isString('I am a string literal'), true, 'string literals are');
-    // assert.ok(_.isString(obj), 'so are String objects');
-  //   assert.strictEqual(_.isString(1), false);
-  // });
   QUnit.test('isSymbol', function(assert) {
     assert.notOk(_.isSymbol(0), 'numbers are not symbols');
     assert.notOk(_.isSymbol(''), 'strings are not symbols');
@@ -766,12 +699,9 @@
       assert.ok(_.isWeakSet(obj), 'but a weakset is');
     }
   });
-  // QUnit.test('isFunction', function(assert) {
-    // assert.notOk(_.isFunction(void 0), 'undefined vars are not functions');
-    // assert.notOk(_.isFunction([1, 2, 3]), 'arrays are not functions');
-    // assert.notOk(_.isFunction('moe'), 'strings are not functions');
-    // assert.ok(_.isFunction(_.isFunction), 'but functions are');
-    // assert.ok(_.isFunction(function(){}), 'even anonymous ones');
+
+  QUnit.test('isFunction', function(assert) {
+
 
     if (testElement) {
       assert.notOk(_.isFunction(testElement), 'elements are not functions');
@@ -891,27 +821,9 @@
     assert.ok(_.has({a: {b: 'foo'}}, ['a', 'b']), 'can check for nested properties.');
     assert.notOk(_.has({a: child}, ['a', 'foo']), 'does not check the prototype of nested props.');
   });
-  // QUnit.test('property', function(assert) {
-    // var stooge = {name: 'moe'};
 
-    // assert.strictEqual(_.property('name')(stooge), 'moe', 'should return the property with the given name');
-
-    // assert.strictEqual(_.property('name')(null), void 0, 'should return undefined for null values');
-
-    // assert.strictEqual(_.property('name')(void 0), void 0, 'should return undefined for undefined values');
-
-    // assert.strictEqual(_.property(null)('foo'), void 0, 'should return undefined for null object');
-
-    // assert.strictEqual(_.property('x')({x: null}), null, 'can fetch null values');
-    //
-    // assert.strictEqual(_.property('length')(null), void 0, 'does not crash on property access of non-objects');
-
-    // Deep property access
-
-    // assert.strictEqual(_.property('a')({a: 1}), 1, 'can get a direct property');
-
-    // assert.strictEqual(_.property(['a', 'b'])({a: {b: 2}}), 2, 'can get a nested property');
-
+  QUnit.test('property', function(assert) {
+  
     assert.strictEqual(_.property(['a'])({a: false}), false, 'can fetch falsy values');
 
     assert.strictEqual(_.property(['x', 'y'])({x: {y: null}}), null, 'can fetch null values deeply');

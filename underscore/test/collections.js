@@ -3,53 +3,6 @@
 
   QUnit.module('Collections');
 
-  QUnit.test('each', function(assert) {
-    // _.each([1, 2, 3], function(num, i) {
-    //   assert.strictEqual(num, i + 1, 'each iterators provide value and iteration count');
-    // });
-
-    // var answers = [];
-    // _.each([1, 2, 3], function(num){ answers.push(num * this.multiplier); }, {multiplier: 5});
-    //
-    // assert.deepEqual(answers, [5, 10, 15], 'context object property accessed');
-
-    // answers = [];
-    // _.each([1, 2, 3], function(num){ answers.push(num); });
-    // assert.deepEqual(answers, [1, 2, 3], 'can iterate a simple array');
-
-    // answers = [];
-    // var obj = {one: 1, two: 2, three: 3};
-    // obj.constructor.prototype.four = 4;
-    // _.each(obj, function(value, key){ answers.push(key); });
-    // assert.deepEqual(answers, ['one', 'two', 'three'], 'iterating over objects works, and ignores the object prototype.');
-    // delete obj.constructor.prototype.four;
-
-    // ensure the each function is JITed
-    // _(1000).times(function() { _.each([], function(){}); });
-    // var count = 0;
-    // obj = {1: 'foo', 2: 'bar', 3: 'baz'};
-    // _.each(obj, function(){ count++; });
-    // assert.strictEqual(count, 3, 'the fun should be called only 3 times');
-
-    // var answer = null;
-    // _.each([1, 2, 3], function(num, index, arr){ if (_.include(arr, num)) answer = true; });
-    // assert.ok(answer, 'can reference the original collection from inside the iterator');
-
-    // answers = 0;
-    // _.each(null, function(){ ++answers; });
-    // assert.strictEqual(answers, 0, 'handles a null properly');
-
-  //   _.each(false, function(){});
-  //
-  //   var a = [1, 2, 3];
-  //   assert.strictEqual(_.each(a, function(){}), a);
-  //   assert.strictEqual(_.each(null, function(){}), null);
-  // });
-
-  // QUnit.test('forEach', function(assert) {
-  //   assert.strictEqual(_.forEach, _.each, 'is an alias for each');
-  // });
-
   QUnit.test('lookupIterator with contexts', function(assert) {
     _.each([true, false, 'yes', '', 0, 1, {}], function(context) {
       _.each([1], function() {
@@ -143,32 +96,6 @@
       assert.strictEqual(count, 2, method + ' is resistant to property changes');
     });
   });
-
-  // QUnit.test('map', function(assert) {
-  //   var doubled = _.map([1, 2, 3], function(num){ return num * 2; });
-  //   assert.deepEqual(doubled, [2, 4, 6], 'doubled numbers');
-
-    // var tripled = _.map([1, 2, 3], function(num){ return num * this.multiplier; }, {multiplier: 3});
-    // assert.deepEqual(tripled, [3, 6, 9], 'tripled numbers with context');
-
-    // doubled = _([1, 2, 3]).map(function(num){ return num * 2; });
-    // assert.deepEqual(doubled, [2, 4, 6], 'OO-style doubled numbers');
-
-    // var ids = _.map({length: 2, 0: {id: '1'}, 1: {id: '2'}}, function(n){
-    //   return n.id;
-    // });
-    // assert.deepEqual(ids, ['1', '2'], 'Can use collection methods on Array-likes.');
-
-    // assert.deepEqual(_.map(null, _.noop), [], 'handles a null properly');
-
-    // assert.deepEqual(_.map([1], function() {
-    //   return this.length;
-    // }, [5]), [1], 'called with context');
-
-  //   // Passing a property name like _.pluck.
-  //   var people = [{name: 'moe', age: 30}, {name: 'curly', age: 50}];
-  //   assert.deepEqual(_.map(people, 'name'), ['moe', 'curly'], 'predicate string map to object properties');
-  // });
 
   QUnit.test('collect', function(assert) {
     assert.strictEqual(_.collect, _.map, 'is an alias for map');
@@ -406,53 +333,7 @@
     assert.strictEqual(_.any, _.some, 'is an alias for some');
   });
 
-  // QUnit.test('includes', function(assert) {
-    // _.each([null, void 0, 0, 1, NaN, {}, []], function(val) {
-    //   assert.strictEqual(_.includes(val, 'hasOwnProperty'), false);
-    // });
-    // assert.strictEqual(_.includes([1, 2, 3], 2), true, 'two is in the array');
-    // assert.notOk(_.includes([1, 3, 9], 2), 'two is not in the array');
-
-    // assert.strictEqual(_.includes([5, 4, 3, 2, 1], 5, true), true, 'doesn\'t delegate to binary search');
-
-    // assert.strictEqual(_.includes({moe: 1, larry: 3, curly: 9}, 3), true, '_.includes on objects checks their values');
-
-    // assert.ok(_([1, 2, 3]).includes(2), 'OO-style includes');
-    //
-    // var numbers = [1, 2, 3, 1, 2, 3, 1, 2, 3];
-    // assert.strictEqual(_.includes(numbers, 1, 1), true, 'takes a fromIndex');
-    // assert.strictEqual(_.includes(numbers, 1, -1), false, 'takes a fromIndex');
-    // assert.strictEqual(_.includes(numbers, 1, -2), false, 'takes a fromIndex');
-    // assert.strictEqual(_.includes(numbers, 1, -3), true, 'takes a fromIndex');
-    // assert.strictEqual(_.includes(numbers, 1, 6), true, 'takes a fromIndex');
-    // assert.strictEqual(_.includes(numbers, 1, 7), false, 'takes a fromIndex');
-  //
-  //   assert.ok(_.every([1, 2, 3], _.partial(_.includes, numbers)), 'fromIndex is guarded');
-  // });
-
-  // QUnit.test('include', function(assert) {
-  //   assert.strictEqual(_.include, _.includes, 'is an alias for includes');
-  // });
-  //
-  // QUnit.test('contains', function(assert) {
-  //   assert.strictEqual(_.contains, _.includes, 'is an alias for includes');
-  //
-  // });
-
-  // QUnit.test('includes with NaN', function(assert) {
-    // assert.strictEqual(_.includes([1, 2, NaN, NaN], NaN), true, 'Expected [1, 2, NaN] to contain NaN');
-    // assert.strictEqual(_.includes([1, 2, Infinity], NaN), false, 'Expected [1, 2, NaN] to contain NaN');
-  // });
-
-  // QUnit.test('includes with +- 0', function(assert) {
-  //   _.each([-0, +0], function(val) {
-  //     assert.strictEqual(_.includes([1, 2, val, val], val), true);
-  //     assert.strictEqual(_.includes([1, 2, val, val], -val), true);
-  //     assert.strictEqual(_.includes([-1, 1, 2], -val), false);
-  //   });
-  // });
-
-
+  
   QUnit.test('invoke', function(assert) {
     assert.expect(13);
     var list = [[5, 1, 7], [3, 2, 1]];
