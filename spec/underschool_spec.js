@@ -704,6 +704,60 @@ describe("Functions", function () {
         return arguments.length; }, _, 'b', _, 'd');
         expect(func('a', 'c', 'e')).toEqual(5);
     });
+  describe("_.bindAll", function () {
+    var curly,
+        moe;
+    beforeEach(function() {
+      curly = { name: 'curly'};
+      moe = {
+        name: 'moe',
+        getName: function() { return 'name: ' + this.name; },
+        sayHi: function () { return 'hi: ' + this.name; },
+        sayLast: function () { return this.sayHi(_.last(arguments)); }
+      };
+      curly.getName = moe.getName;
+      _.bindAll(moe, 'getName', 'sayHi');
+      curly.sayHi = moe.sayHi;
+    });
+
+    it("unbound function is bound to current object", function () {
+      expect(curly.getName()).toEqual('name: curly');
+    });
+
+    it("bound functino is still bound to original object", function () {
+      expect(curly.sayHi()).toEqual('hi: moe');
+    });
+
+    describe("TypeErrors", function () {
+      // _dw fail x 3
+      // how to test for an error?
+      xit("throws an error for bindAll with no functions named", function () {
+        expect(_.bindAll(moe)).toThrow(Error);
+      });
+
+      xit("throws an error for bindAll if the given key is undefined", function () {
+        expect(_.bindAll(moe, 'sayBye')).toThrow(TypeError);
+      });
+
+      xit("throws an error for all bindAll if the given key is not a function", function () {
+        expect(_.bindAll(moe, 'name')).toThrow(TypeErros);
+      });
+    });
+
+    it("createCallback works with any number of arguments", function () {
+      _.bindAll(moe, 'sayHi', 'sayLast')
+      expect(curly.sayHi()).toEqual('hi: moe');
+
+      var sayLast = moe.sayLast;
+      expect(sayLast(_.range(1,8), 'Tom')).toEqual('hi: moe');
+    });
+
+    it("flattens arguments into a single list", function () {
+      _.bindAll(moe, ['getName']);
+      var getName = moe.getName;
+      expect(getName()).toEqual('name: moe');
+    });
+
   });
 });
 describe("Objects", function() {

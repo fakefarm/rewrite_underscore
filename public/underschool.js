@@ -360,5 +360,15 @@ var _ = (function(){
     };
   };
 
+  _.bindAll = restArgs(function (obj, keys) {
+    keys = flatten(keys, false, false);
+    var index = keys.length;
+    if (index < 1) throw new Error('bindAll must be passed function names');
+    while (index--) {
+      var key = keys[index];
+      obj[key] = _.bind(obj[key], obj);
+    }
+  });
+
   return _;
 }());

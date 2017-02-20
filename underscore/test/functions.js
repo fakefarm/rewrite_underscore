@@ -32,43 +32,6 @@
     _.partial.placeholder = _;
   });
 
-  QUnit.test('bindAll', function(assert) {
-    var curly = {name: 'curly'};
-    var moe = {
-      name: 'moe',
-      getName: function() { return 'name: ' + this.name; },
-      sayHi: function() { return 'hi: ' + this.name; }
-    };
-    curly.getName = moe.getName;
-    _.bindAll(moe, 'getName', 'sayHi');
-    curly.sayHi = moe.sayHi;
-    assert.strictEqual(curly.getName(), 'name: curly', 'unbound function is bound to current object');
-    assert.strictEqual(curly.sayHi(), 'hi: moe', 'bound function is still bound to original object');
-
-    curly = {name: 'curly'};
-    moe = {
-      name: 'moe',
-      getName: function() { return 'name: ' + this.name; },
-      sayHi: function() { return 'hi: ' + this.name; },
-      sayLast: function() { return this.sayHi(_.last(arguments)); }
-    };
-
-    assert.raises(function() { _.bindAll(moe); }, Error, 'throws an error for bindAll with no functions named');
-    assert.raises(function() { _.bindAll(moe, 'sayBye'); }, TypeError, 'throws an error for bindAll if the given key is undefined');
-    assert.raises(function() { _.bindAll(moe, 'name'); }, TypeError, 'throws an error for bindAll if the given key is not a function');
-
-    _.bindAll(moe, 'sayHi', 'sayLast');
-    curly.sayHi = moe.sayHi;
-    assert.strictEqual(curly.sayHi(), 'hi: moe');
-
-    var sayLast = moe.sayLast;
-    assert.strictEqual(sayLast(1, 2, 3, 4, 5, 6, 7, 'Tom'), 'hi: moe', 'createCallback works with any number of arguments');
-
-    _.bindAll(moe, ['getName']);
-    var getName = moe.getName;
-    assert.strictEqual(getName(), 'name: moe', 'flattens arguments into a single list');
-  });
-
   QUnit.test('memoize', function(assert) {
     var fib = function(n) {
       return n < 2 ? n : fib(n - 1) + fib(n - 2);
