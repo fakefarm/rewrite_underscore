@@ -681,6 +681,8 @@ describe("Functions", function () {
   });
   describe("_.partial()", function () {
     // _dw fail on all - iteratee is not a fn
+    // _dw note on partial()
+    // unless I need to drill into this, I want to come back to partial() later.
     xit("can partially apply", function () {
       var obj = {name: 'moe'};
       var func = function () { return this.name + ' ' +
@@ -704,6 +706,12 @@ describe("Functions", function () {
         return arguments.length; }, _, 'b', _, 'd');
         expect(func('a', 'c', 'e')).toEqual(5);
     });
+
+    xit("accepts fewer arguments than the number of placeholders", function(){
+          func = _.partial(function() { return typeof arguments[2]; }, _, 'b', _, 'd');
+         expect(func('a')).toEqual(4);
+    });
+  });
   describe("_.bindAll", function () {
     var curly,
         moe;
