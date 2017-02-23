@@ -60,9 +60,9 @@ body { overflow-y: scroll; }
 .jasmine_html-reporter .jasmine-result-message span.jasmine-result { display: block; }
 .jasmine_html-reporter .jasmine-stack-trace { margin: 5px 0 0 0; max-height: 224px; overflow: auto; line-height: 18px; color: #666; border: 1px solid #ddd; background: white; white-space: pre; }
 
-/* _dw custom jasmine */
+/* _dw css jasmine */
 
-.jasmine-symbol-summary, .jasmine-alert {
+/*.jasmine-symbol-summary, .jasmine-alert {
   display: none;
 }
 
@@ -81,4 +81,4 @@ a {
 
 .jasmine-result-message {
   color: red !important;
-}
+}*/

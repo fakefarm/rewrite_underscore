@@ -767,6 +767,22 @@ describe("Functions", function () {
     });
 
   });
+  describe("memoize", function () {
+    var fib
+    beforeEach(function() {
+      fib = function (n) {
+        return n < 2 ? n : fib(n - 1) + fib(n-2);
+      };
+    });
+    it("a memoized version of fibonacci produces identical results", function () {
+      expect(fib(10)).toEqual(55);
+    });
+
+    it("a memoized version of fibonacci produces identical results", function () {
+      fib = _.memoize(fib);
+      expect(fib(10)).toEqual(55);
+    });
+  });
 });
 describe("Objects", function() {
   describe("_.isArray()", function(){
@@ -894,11 +910,9 @@ describe("Objects", function() {
     });
   });
   describe("_.isString()", function () {
-    xit("an element is not a string", function () {
-      // _dw question
-      // what is this?
-      var testElement;
-        expect(_.isString(testElement)).toBe(undefined);
+    it("an undefined is not a string", function () {
+        var testElement;
+        expect(_.isString(testElement)).toBe(false);
     });
 
     it("but strings are", function () {
@@ -947,6 +961,47 @@ describe("Objects", function() {
     });
     xit("can fetch falsy values", function () {
       expect(_.property(['a'])({a: false})).toEqual(false);
+    });
+  });
+  describe("_.allKeys()", function () {});
+  describe("_.has()", function () {
+    var obj = {foo: 'bar', func: function () {}};
+    it("checks that the object has a property", function () {
+      expect(_.has(obj, 'foo'));
+    });
+    it("returns false if the object doesn't have the property", function () {
+      expect(_.has(obj, 'baz'));
+    });
+    it("works for functions too", function () {
+      expect(_.has(obj, 'func'));
+    });
+    it("works even when the hasOwnProperty method is deleted", function () {
+      obj.hasOwnProperty = null;
+      expect(_.has(obj, 'foo'));
+    });
+    it("does not check the prototype chain for a property", function () {
+      var child = {};
+      child.prototype = obj;
+      it("does not check the prototype chain for a property", function () {
+        expect(_.has(child, 'foo')).toBe(false);
+      });
+    });
+
+    it("returns false for null", function () {
+      expect(_.has(null, 'foo')).toBe(false);
+    });
+
+    it("returns false for undefined", function () {
+      expect(_.has({a: {b: 'foo'}}, ['a','b'])).toBe(true);
+    });
+
+    it("can check for nested properties", function () {
+      expect(_.has({a: {b: 'foo'}}, ['a', 'b'])).toBe(true);
+    });
+
+    it("does not check the prototype of nested props", function () {
+      var child = {};
+      expect(_.has({a: child}, ['a', 'foo'])).toBe(true);
     });
   });
 });

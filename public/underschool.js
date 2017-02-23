@@ -370,5 +370,31 @@ var _ = (function(){
     }
   });
 
+  _.memoize = function(func, hasher) {
+    var memoize = function (key) {
+      var cache = memoize.cache;
+      var address = '' + (hasher ? hasher.apply(this, arguments) : key);
+      if (!_.has(cache, address)) cache[address] = func.apply(this, arguments);
+      return cache[address];
+    };
+    memoize.cache = {};
+    return memoize;
+  }
+
+  _.has = function (obj, path) {
+    if(!_.isArray(path)) {
+      return obj != null && hasOwnProperty.call(obj, path);
+    }
+    var length = path.length;
+    for (var i = 0; i < length; i++ ) {
+      var key = path[i];
+      if (obj == null || !hasOwnProperty.call(obj, key)) {
+        return false;
+      }
+      obj = obj[key];
+    }
+    return !!length;
+  };
+
   return _;
 }());

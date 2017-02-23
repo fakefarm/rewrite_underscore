@@ -806,24 +806,15 @@
     assert.strictEqual(intercepted, returned, 'can use tapped objects in a chain');
   });
   QUnit.test('has', function(assert) {
-    var obj = {foo: 'bar', func: function(){}};
-    assert.ok(_.has(obj, 'foo'), 'checks that the object has a property.');
-    assert.notOk(_.has(obj, 'baz'), "returns false if the object doesn't have the property.");
-    assert.ok(_.has(obj, 'func'), 'works for functions too.');
-    obj.hasOwnProperty = null;
-    assert.ok(_.has(obj, 'foo'), 'works even when the hasOwnProperty method is deleted.');
-    var child = {};
-    child.prototype = obj;
-    assert.notOk(_.has(child, 'foo'), 'does not check the prototype chain for a property.');
-    assert.strictEqual(_.has(null, 'foo'), false, 'returns false for null');
-    assert.strictEqual(_.has(void 0, 'foo'), false, 'returns false for undefined');
+
 
     assert.ok(_.has({a: {b: 'foo'}}, ['a', 'b']), 'can check for nested properties.');
+    
     assert.notOk(_.has({a: child}, ['a', 'foo']), 'does not check the prototype of nested props.');
   });
 
   QUnit.test('property', function(assert) {
-  
+
     assert.strictEqual(_.property(['a'])({a: false}), false, 'can fetch falsy values');
 
     assert.strictEqual(_.property(['x', 'y'])({x: {y: null}}), null, 'can fetch null values deeply');
