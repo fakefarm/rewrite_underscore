@@ -805,13 +805,6 @@
     assert.strictEqual(returned, 6, 'can use tapped objects in a chain');
     assert.strictEqual(intercepted, returned, 'can use tapped objects in a chain');
   });
-  QUnit.test('has', function(assert) {
-
-
-    assert.ok(_.has({a: {b: 'foo'}}, ['a', 'b']), 'can check for nested properties.');
-    
-    assert.notOk(_.has({a: child}, ['a', 'foo']), 'does not check the prototype of nested props.');
-  });
 
   QUnit.test('property', function(assert) {
 

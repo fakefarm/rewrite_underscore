@@ -1001,7 +1001,7 @@ describe("Objects", function() {
 
     it("does not check the prototype of nested props", function () {
       var child = {};
-      expect(_.has({a: child}, ['a', 'foo'])).toBe(true);
+      expect(_.has({a: child}, ['a', 'foo'])).toBe(false);
     });
   });
 });
