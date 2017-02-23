@@ -782,6 +782,29 @@ describe("Functions", function () {
       fib = _.memoize(fib);
       expect(fib(10)).toEqual(55);
     });
+
+    it("checks hasOwnProperty", function () {
+      var o = function (str) { return str; }
+      var fastO = _.memoize(o);
+      expect(o('toString')).toEqual('toString');
+      expect(fastO('toString')).toEqual('toString');
+    });
+
+    it("these are all equal", function () {
+
+      // Expose the cache
+      var upper = _.memoize(function (s) {
+        return s.toUpperCase();
+      });
+
+      expect(upper('foo')).toEqual('FOO');
+      expect(upper('bar')).toEqual('BAR');
+      expect(upper.cache).toEqual({foo: 'FOO', bar: 'BAR'});
+      upper.cache = {foo: "BAR", bar: "FOO"};
+      expect(upper('foo')).toEqual('BAR');
+      expect(upper('bar')).toEqual('FOO');
+
+    });
   });
 });
 describe("Objects", function() {
