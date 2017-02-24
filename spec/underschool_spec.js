@@ -1003,24 +1003,22 @@ describe("Objects", function() {
   describe("_.has()", function () {
     var obj = {foo: 'bar', func: function () {}};
     it("checks that the object has a property", function () {
-      expect(_.has(obj, 'foo'));
+      expect(_.has(obj, 'foo')).toBe(true);
     });
     it("returns false if the object doesn't have the property", function () {
-      expect(_.has(obj, 'baz'));
+      expect(_.has(obj, 'baz')).toBe(false);
     });
     it("works for functions too", function () {
-      expect(_.has(obj, 'func'));
+      expect(_.has(obj, 'func')).toBe(true);
     });
     it("works even when the hasOwnProperty method is deleted", function () {
       obj.hasOwnProperty = null;
-      expect(_.has(obj, 'foo'));
+      expect(_.has(obj, 'foo')).toBe(true);
     });
     it("does not check the prototype chain for a property", function () {
       var child = {};
       child.prototype = obj;
-      it("does not check the prototype chain for a property", function () {
-        expect(_.has(child, 'foo')).toBe(false);
-      });
+      expect(_.has(child, 'foo')).toBe(false);
     });
 
     it("returns false for null", function () {
