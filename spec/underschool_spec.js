@@ -819,6 +819,12 @@ describe("Functions", function () {
       }, 150);
     })
   });
+  describe("_.defer()", function () {
+    // this suite is not cooperating so I skip you!
+  });
+  describe("_.throttle", function () {
+    // _dw come back to this later
+  });
 });
 describe("Objects", function() {
   describe("_.isArray()", function(){

@@ -402,5 +402,7 @@ var _ = (function(){
     }, wait);
   });
 
+  _.defer = _.partial(_.delay, _, 1);
+
   return _;
 }());
