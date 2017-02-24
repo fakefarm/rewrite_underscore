@@ -586,7 +586,7 @@ describe("Collections", function () {
   });
 });
 describe("Functions", function () {
-  describe("_.restArgs", function () {
+  describe("_.restArgs()", function () {
     // _dw fail
     //     can't figure out how to get these specs to pass...
     xit("collects rest arguments into an array", function () {
@@ -712,7 +712,7 @@ describe("Functions", function () {
          expect(func('a')).toEqual(4);
     });
   });
-  describe("_.bindAll", function () {
+  describe("_.bindAll()", function () {
     var curly,
         moe;
     beforeEach(function() {
@@ -767,7 +767,7 @@ describe("Functions", function () {
     });
 
   });
-  describe("memoize", function () {
+  describe("_.memoize()", function () {
     var fib
     beforeEach(function() {
       fib = function (n) {
