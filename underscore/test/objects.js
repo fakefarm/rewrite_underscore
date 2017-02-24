@@ -560,22 +560,22 @@
     assert.notOk(_.isEmpty(nonEnumProp), 'non-enumerable property is not empty');
   });
 
-  i (typeof document === 'object') {
-    QUnit.test('isElement', function(assert) {
-      assert.notOk(_.isElement('div'), 'strings are not dom elements');
-      assert.ok(_.isElement(testElement), 'an element is a DOM element');
-    });
-  }
-
-
-    assert.notOk(_.isArguments([1, 2, 3]), 'and not vanilla arrays.');
-
-    if (testElement) {
-      assert.ok(_.isObject(testElement), 'and DOM element');
+    i (typeof document === 'object') {
+      QUnit.test('isElement', function(assert) {
+        assert.notOk(_.isElement('div'), 'strings are not dom elements');
+        assert.ok(_.isElement(testElement), 'an element is a DOM element');
+      });
     }
 
-    assert.notOk(_.isObject(true), 'and not boolean');
-    assert.ok(_.isObject(new String('string')), 'but new String()');
+
+      assert.notOk(_.isArguments([1, 2, 3]), 'and not vanilla arrays.');
+
+      if (testElement) {
+        assert.ok(_.isObject(testElement), 'and DOM element');
+      }
+
+      assert.notOk(_.isObject(true), 'and not boolean');
+      assert.ok(_.isObject(new String('string')), 'but new String()');
   });
 
   QUnit.test('isSymbol', function(assert) {
