@@ -396,5 +396,11 @@ var _ = (function(){
     return !!length;
   };
 
+  _.delay = restArgs(function (func, wait, args) {
+    return setTimeout(function () {
+      return func.apply(null, args);
+    }, wait);
+  });
+
   return _;
 }());

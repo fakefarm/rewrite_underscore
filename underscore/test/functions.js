@@ -31,15 +31,6 @@
   });
 
 
-  QUnit.test('delay', function(assert) {
-    assert.expect(2);
-    var done = assert.async();
-    var delayed = false;
-    _.delay(function(){ delayed = true; }, 100);
-    setTimeout(function(){ assert.notOk(delayed, "didn't delay the function quite yet"); }, 50);
-    setTimeout(function(){ assert.ok(delayed, 'delayed the function'); done(); }, 150);
-  });
-
   QUnit.test('defer', function(assert) {
     assert.expect(1);
     var done = assert.async();

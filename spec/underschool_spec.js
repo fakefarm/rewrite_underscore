@@ -806,6 +806,19 @@ describe("Functions", function () {
 
     });
   });
+  describe("_.delay()", function () {
+    _.delay(function () { delayed = true; }, 100);
+    setTimeout(function () {
+      it("didn't delay the function quite yet", function () {
+        expect(delayed).toBe(false);
+      }, 50);
+    });
+    setTimeout(function () {
+      it("delayed the function", function () {
+        expect(delayed).toBe(true);
+      }, 150);
+    })
+  });
 });
 describe("Objects", function() {
   describe("_.isArray()", function(){
