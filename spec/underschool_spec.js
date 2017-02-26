@@ -584,6 +584,61 @@ describe("Collections", function () {
       expect(_.map(people, 'name')).toEqual(['moe', 'curly']);
     });
   });
+  describe("_.reduce()", function () {
+    it("can sum up an array", function () {
+      var sum = _.reduce([1,2,3],
+                          function (memo, num) {
+                            return memo + num;
+                          }
+                        ,0);
+
+        expect(sum).toEqual(6);
+    });
+    it("can reduce with a context object", function () {
+      var context = { multiplier: 3};
+
+      sum = _.reduce([1, 2, 3], function (memo, num) {
+        return memo + num * this.multiplier; }, 0, context);
+      expect(sum).toEqual(18);
+    });
+    xit("OO-style reduce", function () {
+      // _dw OO-style
+      sum = _([1,2,3]).reduce(function (memo, num) {
+        return memo + num; }, 0);
+        expect(sum).toEqual(6);
+    });
+    it("default initial value", function () {
+      sum = _.reduce([1, 2, 3], function (memo, num) {
+        return memo + num;
+      })
+      expect(sum).toEqual(6);
+    });
+    it("can reduce via multiplication", function () {
+      var prod = _.reduce([1,2,3,4], function (memo, num) {
+        return memo * num; });
+        expect(prod).toEqual(24);
+    });
+    it("handles a null with initial value properly", function () {
+      expect(_.reduce(null, _.noop, 138)).toEqual(138);
+    });
+    it("undefined can be passed as a special case", function () {
+      expect(_.reduce([], _.noop, void 0)).toEqual(void 0);
+    });
+    it("collection of length one with no initial value returns the first item", function () {
+      expect(_.reduce([_], _.noop)).toEqual(_);
+    });
+    it("returns undefined when collection is empty and no inital value", function () {
+      expect(_.reduce([], _.noop)).toEqual(void 0);
+    });
+    describe("aliases", function () {
+      it("_.foldl", function () {
+        expect(_.foldl).toEqual(_.reduce);
+      });
+      it("_.inject", function () {
+        expect(_.inject).toEqual(_.reduce);
+      })
+    });
+  });
 });
 describe("Functions", function () {
   describe("_.restArgs()", function () {
