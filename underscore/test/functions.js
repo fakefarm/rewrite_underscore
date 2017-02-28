@@ -30,8 +30,6 @@
     _.partial.placeholder = _;
   });
 
-
-
   QUnit.test('throttle', function(assert) {
     assert.expect(2);
     var done = assert.async();

@@ -365,6 +365,7 @@ var _ = (function(){
   };
 
   _.reduce = _.foldl = _.inject = createReduce(1);
+  _.reduceRight = _.foldr = createReduce(-1);
 
   var deepGet = function (obj, path) {
     var lenth = path.length;

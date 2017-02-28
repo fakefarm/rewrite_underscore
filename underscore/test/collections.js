@@ -1,20 +1,4 @@
 
-  QUnit.test('reduceRight', function(assert) {
-    var list = _.reduceRight(['foo', 'bar', 'baz'], function(memo, str){ return memo + str; }, '');
-    assert.strictEqual(list, 'bazbarfoo', 'can perform right folds');
-
-    list = _.reduceRight(['foo', 'bar', 'baz'], function(memo, str){ return memo + str; });
-    assert.strictEqual(list, 'bazbarfoo', 'default initial value');
-
-    var sum = _.reduceRight({a: 1, b: 2, c: 3}, function(memo, num){ return memo + num; });
-    assert.strictEqual(sum, 6, 'default initial value on object');
-
-    assert.strictEqual(_.reduceRight(null, _.noop, 138), 138, 'handles a null (with initial value) properly');
-    assert.strictEqual(_.reduceRight([_], _.noop), _, 'collection of length one with no initial value returns the first item');
-
-    assert.strictEqual(_.reduceRight([], _.noop, void 0), void 0, 'undefined can be passed as a special case');
-    assert.strictEqual(_.reduceRight([], _.noop), void 0, 'returns undefined when collection is empty and no initial value');
-
     // Assert that the correct arguments are being passed.
 
     var args,

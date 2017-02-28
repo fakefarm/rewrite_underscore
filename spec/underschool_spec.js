@@ -639,6 +639,37 @@ describe("Collections", function () {
       })
     });
   });
+  describe("_.reduceRight", function () {
+    it("can perform right folds", function () {
+      var list = _.reduceRight(['foo', 'bar', 'baz'], function (memo, str) {
+        return memo + str; }, '');
+      expect(list).toEqual('bazbarfoo');
+    });
+
+    it("default initial value on object", function () {
+      var sum = _.reduceRight({a: 1, b: 2, c: 3}, function (memo, num) {
+        return memo + num;
+      });
+      expect(sum).toEqual(6);
+    });
+
+    it("correct arguments are being passed", function () {
+      var args,
+          init = {},
+          object = {a: 1, b: 2},
+          lastKey = _.keys(object).pop();
+
+      var expected = lastKey === 'a'
+          ? [init, 1, 'a', object]
+          : [init, 2, 'b', object];
+
+      _.reduceRight(object, function () {
+        if(!args) args = _.toArray(arguments);
+      }, init);
+
+      expect(args).toEqual(expected);
+    });
+  });
 });
 describe("Functions", function () {
   describe("_.restArgs()", function () {
