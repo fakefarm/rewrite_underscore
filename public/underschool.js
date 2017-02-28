@@ -427,6 +427,10 @@ var _ = (function(){
     }, wait);
   });
 
+  _.identity = function(value) {
+    return value;
+  };
+
   _.defer = _.partial(_.delay, _, 1);
 
   return _;
