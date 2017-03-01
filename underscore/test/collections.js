@@ -1,7 +1,4 @@
 
-  QUnit.test('foldr', function(assert) {
-    assert.strictEqual(_.foldr, _.reduceRight, 'is an alias for reduceRight');
-  });
   QUnit.test('find', function(assert) {
     var array = [1, 2, 3, 4];
     assert.strictEqual(_.find(array, function(n) { return n > 2; }), 3, 'should return first found `value`');

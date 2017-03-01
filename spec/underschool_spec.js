@@ -682,6 +682,11 @@ describe("Collections", function () {
       expect(args).toEqual(expected);
     });
   });
+  describe("alias", function () {
+    it("_.foldr()", function () {
+      expect(_.foldr).toEqual(_.reduceRight);
+    });
+  });
 });
 describe("Functions", function () {
   describe("_.restArgs()", function () {
