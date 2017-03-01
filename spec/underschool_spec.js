@@ -681,10 +681,29 @@ describe("Collections", function () {
       }, init);
       expect(args).toEqual(expected);
     });
+    describe("alias", function () {
+      it("_.foldr()", function () {
+        expect(_.foldr).toEqual(_.reduceRight);
+      });
+    });
   });
-  describe("alias", function () {
-    it("_.foldr()", function () {
-      expect(_.foldr).toEqual(_.reduceRight);
+  describe("_.find", function () {
+    it("should return first found 'value'", function () {
+      var array = [1, 2, 3, 4];
+      expect(_.find(array, function(n) { return n > 2; })).toEqual(3);
+    });
+    it("should return 'undefined' if 'value' is not found", function () {
+      var array = _.range(1, 6);
+      expect(_.find(array, function() {return false; })).toBeUndefined();
+    });
+    it("iterates array-likes correctly", function () {
+        var array = _.range(1, 6);
+        array.dontmatch = 55;
+        expect(_.find(array, function (x) {
+          return x === 55; })).toBeUndefined();
+    });
+    it("can be used as findeWhere", function () {
+      var list = [{a: 1, b: 2}]
     });
   });
 });

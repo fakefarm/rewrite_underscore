@@ -1,20 +1,18 @@
 
-  QUnit.test('find', function(assert) {
-    var array = [1, 2, 3, 4];
-    assert.strictEqual(_.find(array, function(n) { return n > 2; }), 3, 'should return first found `value`');
-    assert.strictEqual(_.find(array, function() { return false; }), void 0, 'should return `undefined` if `value` is not found');
-
-    array.dontmatch = 55;
-    assert.strictEqual(_.find(array, function(x) { return x === 55; }), void 0, 'iterates array-likes correctly');
 
     // Matching an object like _.findWhere.
     var list = [{a: 1, b: 2}, {a: 2, b: 2}, {a: 1, b: 3}, {a: 1, b: 4}, {a: 2, b: 4}];
+
     assert.deepEqual(_.find(list, {a: 1}), {a: 1, b: 2}, 'can be used as findWhere');
+
     assert.deepEqual(_.find(list, {b: 4}), {a: 1, b: 4});
+
     assert.notOk(_.find(list, {c: 1}), 'undefined when not found');
+
     assert.notOk(_.find([], {c: 1}), 'undefined when searching empty list');
 
     var result = _.find([1, 2, 3], function(num){ return num * 2 === 4; });
+
     assert.strictEqual(result, 2, 'found the first "2" and broke the loop');
 
     var obj = {
@@ -24,15 +22,21 @@
       d: {x: 4, z: 1}
     };
 
+
     assert.deepEqual(_.find(obj, {x: 2}), {x: 2, z: 2}, 'works on objects');
+
     assert.deepEqual(_.find(obj, {x: 2, z: 1}), void 0);
+
     assert.deepEqual(_.find(obj, function(x) {
       return x.x === 4;
     }), {x: 4, z: 1});
 
     _.findIndex([{a: 1}], function(a, key, o) {
+
       assert.strictEqual(key, 0);
+
       assert.deepEqual(o, [{a: 1}]);
+
       assert.strictEqual(this, _, 'called with context');
     }, _);
   });
