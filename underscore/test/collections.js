@@ -1,37 +1,4 @@
 
-    // Assert that the correct arguments are being passed.
-
-    var args,
-        init = {},
-        object = {a: 1, b: 2},
-        lastKey = _.keys(object).pop();
-
-    var expected = lastKey === 'a'
-      ? [init, 1, 'a', object]
-      : [init, 2, 'b', object];
-
-    _.reduceRight(object, function() {
-      if (!args) args = _.toArray(arguments);
-    }, init);
-
-    assert.deepEqual(args, expected);
-
-    // And again, with numeric keys.
-
-    object = {2: 'a', 1: 'b'};
-    lastKey = _.keys(object).pop();
-    args = null;
-
-    expected = lastKey === '2'
-      ? [init, 'a', '2', object]
-      : [init, 'b', '1', object];
-
-    _.reduceRight(object, function() {
-      if (!args) args = _.toArray(arguments);
-    }, init);
-
-    assert.deepEqual(args, expected);
-  });
   QUnit.test('foldr', function(assert) {
     assert.strictEqual(_.foldr, _.reduceRight, 'is an alias for reduceRight');
   });

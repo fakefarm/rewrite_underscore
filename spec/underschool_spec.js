@@ -645,14 +645,12 @@ describe("Collections", function () {
         return memo + str; }, '');
       expect(list).toEqual('bazbarfoo');
     });
-
     it("default initial value on object", function () {
       var sum = _.reduceRight({a: 1, b: 2, c: 3}, function (memo, num) {
         return memo + num;
       });
       expect(sum).toEqual(6);
     });
-
     it("correct arguments are being passed", function () {
       var args,
           init = {},
@@ -667,6 +665,20 @@ describe("Collections", function () {
         if(!args) args = _.toArray(arguments);
       }, init);
 
+      expect(args).toEqual(expected);
+    });
+    it("and again, with numeric keys", function () {
+      var init = {},
+          object = {2: 'a', 1: 'b'},
+          lastKey = _.keys(object).pop(),
+          args = null,
+          expected = lastKey === '2'
+                      ? [init, 'a', '2', object]
+                      : [init, 'b', '1', object];
+
+      _.reduceRight(object, function () {
+        if(!args) args = _.toArray(arguments);
+      }, init);
       expect(args).toEqual(expected);
     });
   });
