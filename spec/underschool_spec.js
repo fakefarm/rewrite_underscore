@@ -706,6 +706,7 @@ describe("Collections", function () {
       var list = [{a: 1, b: 2},{a: 2, b: 2},{a: 1, b: 3},{a: 1, b: 4},{a: 2, b: 4},]
       expect(_.find(list, {a: 1})).toEqual({a: 1, b: 2});
     });
+
     it("works on objects", function () {
       var obj = {
         a: {x: 1, z: 3},
@@ -713,7 +714,52 @@ describe("Collections", function () {
         c: {x: 3, z: 4},
         d: {x: 4, z: 1}
       };
+
       expect(_.find(obj, {x: 2})).toEqual({x: 2, z: 2});
+    });
+
+    var list = [
+                {a: 1, b: 2},
+                {a: 1, b: 3},
+                {a: 1, b: 4},
+                {a: 2, b: 2},
+                {a: 2, b: 4}
+               ];
+
+    it("finds this unnamed spec", function () {
+      expect(_.find(list, {b: 4})).toEqual({a: 1, b: 4});
+    });
+
+    it("undefined when nothing found", function () {
+      expect(_.find(list, {c: 1})).toBeUndefined();
+    });
+
+    it("undefined when searching empty list", function () {
+      expect(_.find([], {c: 1})).toBeUndefined();
+    });
+
+    it("found the first '2' and broke the loop", function () {
+      var result = _.find([1, 2, 3], function(num){
+        return num * 2 === 4;
+      });
+      expect(result).toEqual(2);
+    });
+
+    var obj = {
+      a: {x: 1, z: 3},
+      b: {x: 2, z: 2},
+      c: {x: 3, z: 4},
+      d: {x: 4, z: 1}
+    };
+
+    it("works on objects", function () {
+      expect(_.find(obj, {x: 2})).toEqual({x: 2, z: 2});
+    });
+
+    it("create calculations", function () {
+      expect(_.find(obj, function (x) {
+        return x.x === 4;
+      })).toEqual({x: 4, z: 1});
     });
   });
 });

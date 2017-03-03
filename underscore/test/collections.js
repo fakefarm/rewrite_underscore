@@ -1,48 +1,8 @@
 
-
-    // Matching an object like _.findWhere.
-    var list = [{a: 1, b: 2}, {a: 2, b: 2}, {a: 1, b: 3}, {a: 1, b: 4}, {a: 2, b: 4}];
-
-    assert.deepEqual(_.find(list, {a: 1}), {a: 1, b: 2}, 'can be used as findWhere');
-
-    assert.deepEqual(_.find(list, {b: 4}), {a: 1, b: 4});
-
-    assert.notOk(_.find(list, {c: 1}), 'undefined when not found');
-
-    assert.notOk(_.find([], {c: 1}), 'undefined when searching empty list');
-
-    var result = _.find([1, 2, 3], function(num){ return num * 2 === 4; });
-
-    assert.strictEqual(result, 2, 'found the first "2" and broke the loop');
-
-    var obj = {
-      a: {x: 1, z: 3},
-      b: {x: 2, z: 2},
-      c: {x: 3, z: 4},
-      d: {x: 4, z: 1}
-    };
-
-
-    assert.deepEqual(_.find(obj, {x: 2}), {x: 2, z: 2}, 'works on objects');
-
-    assert.deepEqual(_.find(obj, {x: 2, z: 1}), void 0);
-
-    assert.deepEqual(_.find(obj, function(x) {
-      return x.x === 4;
-    }), {x: 4, z: 1});
-
-    _.findIndex([{a: 1}], function(a, key, o) {
-
-      assert.strictEqual(key, 0);
-
-      assert.deepEqual(o, [{a: 1}]);
-
-      assert.strictEqual(this, _, 'called with context');
-    }, _);
-  });
   QUnit.test('detect', function(assert) {
     assert.strictEqual(_.detect, _.find, 'is an alias for find');
   });
+
   QUnit.test('filter', function(assert) {
     var evenArray = [1, 2, 3, 4, 5, 6];
     var evenObject = {one: 1, two: 2, three: 3};
