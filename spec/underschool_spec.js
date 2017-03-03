@@ -703,7 +703,17 @@ describe("Collections", function () {
           return x === 55; })).toBeUndefined();
     });
     it("can be used as findeWhere", function () {
-      var list = [{a: 1, b: 2}]
+      var list = [{a: 1, b: 2},{a: 2, b: 2},{a: 1, b: 3},{a: 1, b: 4},{a: 2, b: 4},]
+      expect(_.find(list, {a: 1})).toEqual({a: 1, b: 2});
+    });
+    it("works on objects", function () {
+      var obj = {
+        a: {x: 1, z: 3},
+        b: {x: 2, z: 2},
+        c: {x: 3, z: 4},
+        d: {x: 4, z: 1}
+      };
+      expect(_.find(obj, {x: 2})).toEqual({x: 2, z: 2});
     });
   });
 });

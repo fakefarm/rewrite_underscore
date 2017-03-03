@@ -89,16 +89,32 @@ var _ = (function(){
     };
   };
 
+
+
+
   // An internal function to generate callbacks that can be applied to each element in a collection, returning the desired result - either `identity`, an arbitrary callback, a property matcher, or a property accessor
+
+
 
   var cb = function(value, context, argCount) {
     if(_.iteratee !== builtinIteratee) return _.iteratee(value, context);
+
     if (value == null) return _.identity;
+
     if (_.isFunction(value)) return optimizeCb(value, context, argCount);
+
     if (_.isObject(value) && !_.isArray(value)) return _.matcher(value);
-    // _dw how was map able to work before using this?
+
     return _.property(value);
   }
+
+
+
+
+
+
+
+
   _.difference = restArgs(function(array, rest){
     rest = flatten(rest, true, true);
     return _.filter(array, function(value) {
@@ -106,8 +122,52 @@ var _ = (function(){
     });
   });
 
-  // _dw note
-  // seems the difference in first() & initial() is how they deal with N. With first(), use N to declare that you want 'the first N of an array'. With initial, you are using N to declare that you want all of the array execpt 'N'
+  var createAssigner = function(keysFunc, defaults) {
+    return function (obj) {
+      var length = arguments.length;
+      if (defaults) obj = Object(obj);
+      if (length < 2 || obj == null) return obj;
+      for (var index = 1; index < length; index++) {
+        var source = arguments[index],
+            keys = keysFunc(source),
+            l = keys.length;
+        for (var i = 0; i < l; i++) {
+          var key = keys[i];
+          if (!defaults || obj[keys] === void 0) obj[key] = source[key];
+        }
+      }
+      return obj;
+    };
+  };
+
+  _.keys = function(obj) {
+    if (!_.isObject(obj)) return [];
+    if (nativeKeys) return nativeKeys(obj);
+    var keys = [];
+    for (var key in obj) if (_.has(obj, key)) keys.push(key);
+    return keys;
+  };
+
+
+  _.extendOwn = _.assign = createAssigner(_.keys);
+
+  _.matcher = _.matches = function (attrs) {
+    attrs = _.extendOwn({}, attrs);
+    return function (obj) {
+      return _.isMatch(obj, attrs);
+    };
+  };
+
+  _.isMatch = function (object, attrs) {
+    var keys = _.keys(attrs), length = keys.length;
+    if (object == null) return !length;
+    var obj = Object(object);
+    for (var i = 0; i < length; i++) {
+      var key = keys[i];
+      if (attrs[key] !== obj[key] || !(key in obj)) return false;
+    }
+    return true;
+  }
 
   _.first = _.head = _.take = function(array, n, guard) {
     if( array == null || array.length < 1 ) return void 0;
@@ -125,8 +185,6 @@ var _ = (function(){
 
   _.last = function(array, n, guard) {
     if (array == null || array.length < 1) return void 0;
-    // _dw note
-    // returns undefined rather than blowing up. Nice!
     if (n == null || guard) return array[array.length - 1];
     return _.rest(array, Math.max(0, array.length - n));
   };
@@ -279,19 +337,35 @@ var _ = (function(){
     return results;
   };
 
+
+
+
+
+
+
+
+
   _.find = _.detect = function (obj, predicate, context) {
     var keyFinder = isArrayLike(obj) ? _.findIndex : _.findKey;
     var key = keyFinder(obj, predicate, context);
     if (key !== void 0 && key !== -1) return obj[key];
   };
 
-  _.keys = function(obj) {
-    if (!_.isObject(obj)) return [];
-    if (nativeKeys) return nativeKeys(obj);
-    var keys = [];
-    for (var key in obj) if (_.has(obj, key)) keys.push(key);
-    return keys;
-  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   _.isObject = function (obj) {
     var type = typeof obj;
@@ -448,10 +522,29 @@ var _ = (function(){
         if (predicate(array[index], index, array)) return index;
       }
       return -1;
+    };
+  };
+
+  _.findKey = function (obj, predicate, context) {
+    predicate = cb(predicate, context);
+    var keys = _.keys(obj), key;
+    for (var i = 0, length = keys.length; i < length; i++) {
+      key = keys[i];
+      if (predicate(obj[key], key, obj)) return key;
     }
-  }
+  };
 
   _.findIndex = createPredicateIndexFinder(1);
 
+  _.sortedIndex = function (array, obj, iteratee, context) {
+    iteratee = cb(iteratee, context, 1);
+    var value = iteratee(obj);
+    var low = 0, high = getLength(array);
+    while (low < high) {
+      var mid = Math.floor((low + high) / 2);
+      if (iteratee(array[mid]) < value ) low = mid + 1; else high = mid;
+    }
+    return low;
+  }
   return _;
 }());
