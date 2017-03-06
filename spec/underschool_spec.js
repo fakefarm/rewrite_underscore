@@ -761,6 +761,32 @@ describe("Collections", function () {
         return x.x === 4;
       })).toEqual({x: 4, z: 1});
     });
+    describe("aliases", function () {
+      it("_.detect", function () {
+        expect(_.detect).toEqual(_.find);
+      });
+    });
+  });
+  describe("_.filter()", function () {
+    it("can filter arrays and objects", function () {
+      var array = _.range(1,7);
+      var obj = {one: 1, two: 2, three: 3};
+      var isEven = function (num) { return num % 2 === 0; }
+      expect(_.filter(array, isEven)).toEqual([2, 4, 6]);
+      expect(_.filter(obj, isEven)).toEqual([2]);
+    });
+    it("extra eamples", function () {
+      var list = [{a: 1, b: 2}, {a: 2, b: 2}, {a: 1, b: 3}, {a: 1, b: 4}];
+      expect(_.filter(list, {a: 1})).toEqual([{a:1,b:2},{a:1,b:3}, {a:1,b:4} ]);
+      expect(_.filter(list, {b: 2})).toEqual([{a:1,b:2},{a:2,b:2} ]);
+      expect(_.filter(list, {})).toEqual(list);
+
+    });
+    describe("aliases", function () {
+      it("_.select", function () {
+        expect(_.select).toEqual(_.filter);
+      });
+    });
   });
 });
 describe("Functions", function () {

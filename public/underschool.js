@@ -112,8 +112,14 @@ var _ = (function(){
 
 
 
-
-
+  _.filter = _.select = function (obj, predicate, context) {
+    var results = [];
+    predicate = cb(predicate, context);
+    _.each(obj, function (value, index, list) {
+      if (predicate(value, index, list)) results.push(value);
+    });
+    return results;
+  }
 
   _.difference = restArgs(function(array, rest){
     rest = flatten(rest, true, true);
@@ -300,14 +306,6 @@ var _ = (function(){
     return cb(value, context, Infinity);
   }
 
-  _.filter = function(obj, predicate, context) {
-    var results = [];
-    predicate = cb(predicate, context);
-    _.each(obj, function(value, index, list) {
-      if(predicate(value, index, list)) results.push(value);
-    });
-    return results;
-  }
 
   _.each = _.forEach = function(obj, iteratee, context) {
     iteratee = optimizeCb(iteratee, context);
