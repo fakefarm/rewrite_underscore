@@ -1,37 +1,3 @@
-  QUnit.test('reject', function(assert) {
-    var odds = _.reject([1, 2, 3, 4, 5, 6], function(num){ return num % 2 === 0; });
-    assert.deepEqual(odds, [1, 3, 5], 'rejected each even number');
-
-    var context = 'obj';
-
-    var evens = _.reject([1, 2, 3, 4, 5, 6], function(num){
-      assert.strictEqual(context, 'obj');
-      return num % 2 !== 0;
-    }, context);
-    assert.deepEqual(evens, [2, 4, 6], 'rejected each odd number');
-
-    assert.deepEqual(_.reject([odds, {one: 1, two: 2, three: 3}], 'two'), [odds], 'predicate string map to object properties');
-
-    // Can be used like _.where.
-    var list = [{a: 1, b: 2}, {a: 2, b: 2}, {a: 1, b: 3}, {a: 1, b: 4}];
-    assert.deepEqual(_.reject(list, {a: 1}), [{a: 2, b: 2}]);
-    assert.deepEqual(_.reject(list, {b: 2}), [{a: 1, b: 3}, {a: 1, b: 4}]);
-    assert.deepEqual(_.reject(list, {}), [], 'Returns empty list given empty object');
-  });
-  QUnit.test('every', function(assert) {
-    assert.ok(_.every([], _.identity), 'the empty set');
-    assert.ok(_.every([true, true, true], _.identity), 'every true values');
-    assert.notOk(_.every([true, false, true], _.identity), 'one false value');
-    assert.ok(_.every([0, 10, 28], function(num){ return num % 2 === 0; }), 'even numbers');
-    assert.notOk(_.every([0, 11, 28], function(num){ return num % 2 === 0; }), 'an odd number');
-    assert.strictEqual(_.every([1], _.identity), true, 'cast to boolean - true');
-    assert.strictEqual(_.every([0], _.identity), false, 'cast to boolean - false');
-    assert.notOk(_.every([void 0, void 0, void 0], _.identity), 'works with arrays of undefined');
-
-    var list = [{a: 1, b: 2}, {a: 2, b: 2}, {a: 1, b: 3}, {a: 1, b: 4}];
-    assert.notOk(_.every(list, {a: 1, b: 2}), 'Can be called with object');
-    assert.ok(_.every(list, 'a'), 'String mapped to object property');
-
     list = [{a: 1, b: 2}, {a: 2, b: 2, c: true}];
     assert.ok(_.every(list, {b: 2}), 'Can be called with object');
     assert.notOk(_.every(list, 'c'), 'String mapped to object property');

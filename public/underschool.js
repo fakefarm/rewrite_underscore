@@ -108,9 +108,26 @@ var _ = (function(){
     return _.property(value);
   }
 
+  _.negate = function (predicate) {
+    return function () {
+      return !predicate.apply(this, arguments);
+    }
+  }
 
+  _.every = _.all = function (obj, predicate, context) {
+    predicate = cb(predicate, context);
+    var keys = !isArrayLike(obj) && _.keys(obj),
+        length = (keys || obj).length;
+    for (var index = 0; index < length; index++) {
+      var currentKey = keys ? keys[index] : index;
+      if (!predicate(obj[currentKey], currentKey, obj)) return false;
+    }
+    return true;
+  };
 
-
+  _.reject = function (obj, predicate, context) {
+    return _.filter(obj, _.negate(cb(predicate)), context);
+  }
 
   _.filter = _.select = function (obj, predicate, context) {
     var results = [];

@@ -788,6 +788,51 @@ describe("Collections", function () {
       });
     });
   });
+  describe("_.reject()", function () {
+    it("rejected each even number", function () {
+      var odds = _.reject(_.range(1,7), function (num) {
+        return num % 2 === 0; })
+        expect(odds).toEqual([1,3,5]);
+    });
+    it("reject odds", function () {
+      var context = 'obj';
+      var evens = _.reject(_.range(1,7), function (num) {
+          return num % 2 !== 0;
+      });
+      expect(evens).toEqual([2, 4, 6]);
+    });
+    it("predicate string map to object properties", function () {
+      var odds = _.reject([1, 2, 3, 4, 5, 6], function(num){ return num % 2 === 0; });
+      expect(_.reject([odds, {one: 1, two: 2, three: 3}], 'two')).toEqual([odds]);
+    });
+    it("3 tests", function () {
+      var list = [{a: 1, b: 2}, {a: 2, b: 2}, {a: 1, b: 3}, {a: 1, b: 4}];
+      expect(_.reject(list, {a: 1})).toEqual([{a: 2, b: 2}]);
+      expect(_.reject(list, {b: 2})).toEqual([{a: 1, b: 3}, {a: 1, b: 4} ]);
+    });
+  });
+  describe("_.every()", function () {
+    it("the empty set", function () {
+      expect(_.every([], _.identity)).toEqual(true);
+    });
+    it("every true values", function () {
+      expect(_.every([true, true, true], _.identity)).toEqual(true);
+    });
+    it("one false value", function () {
+      expect(_.every([true, false, true], _.identity)).toEqual(false);
+    });
+    it("even numbers", function () {
+      expect(_.every([0,10,28], function (num) {
+        return num % 2 === 0;
+      })).toEqual(true);
+    });
+    it("can be called with object", function () {
+      var list = [{a: 1, b: 2}, {a: 2, b: 2, c: true}, {a: 1, b: 3}, {a: 1, b: 4}];
+      expect(_.every(list, {a: 1, b: 2})).toBe(false);
+      expect(_.every(list, 'a')).toBe(true);
+      expect(_.every(list, {b: 2})).toBe(true);
+    });
+  });
 });
 describe("Functions", function () {
   describe("_.restArgs()", function () {
