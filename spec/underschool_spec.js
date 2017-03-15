@@ -858,6 +858,45 @@ describe("Collections", function () {
     it("a string is considered true", function () {
       expect(_.some([null, 0, 'yes', false])).toBe(true);
     });
+    it("can use a callback function for specific calculations", function () {
+      var answer = _.some([1,11, 29], function (num) {
+        return num % 2 === 0; });
+        expect(answer).toBe(false);
+    });
+    it("other examples", function () {
+      expect(_.some([null, 0, '', false])).toBe(false);
+      expect(_.some([1, 10, 29], function (num) {
+        return num % 2 === 0; })).toBe(true);
+      expect(_.some([1], _.identity)).toBe(true);
+      expect(_.some([0], _.identity)).toBe(false);
+      expect(_.some([false, false, true])).toBe(true);
+    });
+
+    it("can be called with object; string mappted to object property", function () {
+      var list = [{a: 1, b: 2}, {a: 2, b: 2}, {a: 1, b: 3}, {a: 1, b: 4}];
+      expect(_.some(list, {a: 5, b: 2})).toBe(false);
+      expect(_.some(list, 'a')).toBe(true);
+
+      var listB = [{a: 1, b: 2}, {a: 2, b: 2, c: true}];
+      expect(_.some(listB, {b: 2})).toBe(true);
+      expect(_.some(list, 'd')).toBe(false);
+
+      var listC = {a: '1', b: '2', c: '3', d: '4', e: 6}
+      expect(_.some(listC, _.isNumber)).toBe(true);
+
+      var listD = {a: 1, b: 2, c: 3, d: 4}
+      expect(_.some(listD, _.isObject)).toBe(false);
+    });
+
+    it("context works", function () {
+      expect(_.some(['a', 'b', 'c', 'd'], _.hasOwnProperty, {a: 1, b: 2, c: 3, d: 4})).toBe(true);
+      expect(_.some(['x', 'y', 'z'], _.hasOwnProperty, {a: 1, b: 2, c: 3, d: 4})).toBe(false);
+    });
+    describe("alias", function () {
+      it("_.any()", function () {
+        expect(_.any).toEqual(_.some);
+      });
+    });
   });
 });
 describe("Functions", function () {
