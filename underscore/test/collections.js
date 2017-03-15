@@ -1,20 +1,4 @@
-    list = [{a: 1, b: 2}, {a: 2, b: 2, c: true}];
-    assert.ok(_.every(list, {b: 2}), 'Can be called with object');
-    assert.notOk(_.every(list, 'c'), 'String mapped to object property');
 
-    assert.ok(_.every({a: 1, b: 2, c: 3, d: 4}, _.isNumber), 'takes objects');
-    assert.notOk(_.every({a: 1, b: 2, c: 3, d: 4}, _.isObject), 'takes objects');
-    assert.ok(_.every(['a', 'b', 'c', 'd'], _.hasOwnProperty, {a: 1, b: 2, c: 3, d: 4}), 'context works');
-    assert.notOk(_.every(['a', 'b', 'c', 'd', 'f'], _.hasOwnProperty, {a: 1, b: 2, c: 3, d: 4}), 'context works');
-  });
-  QUnit.test('all', function(assert) {
-    assert.strictEqual(_.all, _.every, 'is an alias for every');
-  });
-  QUnit.test('some', function(assert) {
-    assert.notOk(_.some([]), 'the empty set');
-    assert.notOk(_.some([false, false, false]), 'all false values');
-    assert.ok(_.some([false, false, true]), 'one true value');
-    assert.ok(_.some([null, 0, 'yes', false]), 'a string');
     assert.notOk(_.some([null, 0, '', false]), 'falsy values');
     assert.notOk(_.some([1, 11, 29], function(num){ return num % 2 === 0; }), 'all odd numbers');
     assert.ok(_.some([1, 10, 29], function(num){ return num % 2 === 0; }), 'an even number');

@@ -830,7 +830,33 @@ describe("Collections", function () {
       var list = [{a: 1, b: 2}, {a: 2, b: 2, c: true}, {a: 1, b: 3}, {a: 1, b: 4}];
       expect(_.every(list, {a: 1, b: 2})).toBe(false);
       expect(_.every(list, 'a')).toBe(true);
-      expect(_.every(list, {b: 2})).toBe(true);
+    });
+    it("takes objects", function () {
+      expect(_.every({a: 1, b: 2, c: 3, d: 4}, _.isNumber)).toBe(true);
+      expect(_.every({a: 1, b: 2, c: 3, d: 4}, _.isObject)).toBe(false);
+    });
+    it("context works", function () {
+      expect(_.every(['a', 'b', 'c', 'd'], _.hasOwnProperty, {a: 1, b: 2, c: 3, d: 4})).toBe(true);
+      expect(_.every(['a', 'b', 'c', 'd', 'f'], _.hasOwnProperty, {a: 1, b: 2, c: 3, d: 4})).toBe(false);
+    });
+    describe("alias", function () {
+      it("_.all()", function () {
+        expect(_.all).toEqual(_.every);
+      });
+    });
+  });
+  describe("_.some()", function () {
+    it("empty sets are false", function () {
+      expect(_.some([])).toBe(false);
+    });
+    it("all false values is false", function () {
+      expect(_.some([false, false, false])).toBe(false);
+    });
+    it("one true value passes as true", function () {
+      expect(_.some([false, false, true])).toBe(true);
+    });
+    it("a string is considered true", function () {
+      expect(_.some([null, 0, 'yes', false])).toBe(true);
     });
   });
 });

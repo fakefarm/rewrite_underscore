@@ -145,6 +145,17 @@ var _ = (function(){
     });
   });
 
+  _.some = _.any = function (obj, predicate, context) {
+    predicate = cb(predicate, context);
+    var keys = !isArrayLike(obj) && _.keys(obj),
+        length = (keys || obj).length;
+    for (var index = 0; index < length; index++) {
+      var currentKey = keys ? keys[index] : index;
+      if (predicate(obj[currentKey], currentKey, obj)) return true;
+    }
+    return false;
+  };
+
   var createAssigner = function(keysFunc, defaults) {
     return function (obj) {
       var length = arguments.length;
