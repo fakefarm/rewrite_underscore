@@ -404,6 +404,27 @@ var _ = (function(){
     return _.indexOf(obj, item, fromIndex) >= 0;
   };
 
+  _.invoke = restArgs(function (obj, path, args) {
+    var contextPath, func;
+    if (_.isFunction(path)) {
+      func = path;
+    } else if (_.isArray(path)) {
+      contextPath = path.slice(0, -1);
+      path = path[path.length - 1];
+    }
+    return _.map(obj, function (context) {
+      var method = func;
+      if (!method) {
+        if (contextPath && contextPath.length) {
+          context = deepGet(context, contextPath);
+        }
+        if (context == null) return void 0;
+        method = context[path];
+      }
+      return method == null ? method : method.apply(context, args);
+    });
+  });
+
   _.toArray = function (obj) {
     if (!obj) return [];
     if (_.isArray(obj)) return slice.call(obj);
@@ -558,6 +579,12 @@ var _ = (function(){
       key = keys[i];
       if (predicate(obj[key], key, obj)) return key;
     }
+  };
+
+  _.constant = function (value) {
+    return function () {
+      return value;
+    };
   };
 
   _.findIndex = createPredicateIndexFinder(1);

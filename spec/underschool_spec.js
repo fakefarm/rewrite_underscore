@@ -898,6 +898,44 @@ describe("Collections", function () {
       });
     });
   });
+  describe("invoke", function () {
+    var list = [[5, 1, 7], [3, 2, 1]];
+    var result = _.invoke(list, 'sort');
+    it("sorts the results of each array, individually", function () {
+      expect(result[0]).toEqual([1, 5, 7]);
+      expect(result[1]).toEqual([1, 2, 3]);
+    });
+    it("called with arguments", function () {
+      _.invoke([{
+        method: function () {
+          expect(_.toArray(arguments)).toEqual([1,2,3]);
+        }
+      }], 'method', 1, 2, 3)
+    });
+    it("handles null & undefined", function () {
+      expect(_.invoke([{a: null}, {}, {a: _.constant(1)}], 'a')).toEqual([null, void 0, 1]);
+    });
+    it("works with deep methods", function () {
+      var getFoo = _.constant('foo');
+      var getThis = function() { return this; };
+      var item = {
+        a: {
+          b: getFoo,
+          c: getThis,
+          d: null
+        },
+        e: getFoo,
+        f: getThis,
+        g: function() {
+          return {
+            h: getFoo
+          };
+        }
+      };
+      var arr = [item];
+      expect(_.invoke(arr, ['a', 'b'])).toEqual(['foo']);
+    });
+  });
 });
 describe("Functions", function () {
   describe("_.restArgs()", function () {

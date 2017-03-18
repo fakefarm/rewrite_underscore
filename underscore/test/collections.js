@@ -1,18 +1,5 @@
-  QUnit.test('invoke', function(assert) {
-    assert.expect(13);
-    var list = [[5, 1, 7], [3, 2, 1]];
-    var result = _.invoke(list, 'sort');
-    assert.deepEqual(result[0], [1, 5, 7], 'first array sorted');
-    assert.deepEqual(result[1], [1, 2, 3], 'second array sorted');
-
-    _.invoke([{
-      method: function() {
-        assert.deepEqual(_.toArray(arguments), [1, 2, 3], 'called with arguments');
-      }
-    }], 'method', 1, 2, 3);
-
-    assert.deepEqual(_.invoke([{a: null}, {}, {a: _.constant(1)}], 'a'), [null, void 0, 1], 'handles null & undefined');
-
+    // _dw figure out how to test asserts
+    
     assert.raises(function() {
       _.invoke([{a: 1}], 'a');
     }, TypeError, 'throws for non-functions');
